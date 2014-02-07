@@ -50,6 +50,10 @@ namespace Grabacr07.KanColleWrapper
 		/// </summary>
 		public Quests Quests { get; private set; }
 
+		public GamePage GamePage { get; private set; }
+
+		public Logger Logger { get; private set; }
+
 		#region Admiral 変更通知プロパティ
 
 		private Admiral _Admiral;
@@ -157,6 +161,17 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
+		public Ship Secretary
+		{
+			get
+			{
+				if (this.Fleets[1] != null)
+				{
+					return this.Fleets[1].Ships[0];
+				}
+				return null;
+			}
+		}
 
 		internal Homeport(KanColleProxy proxy)
 		{
@@ -212,6 +227,8 @@ namespace Grabacr07.KanColleWrapper
 			this.Dockyard = new Dockyard(proxy);
 			this.Repairyard = new Repairyard(this, proxy);
 			this.Quests = new Quests(proxy);
+			this.GamePage = new GamePage(proxy);
+			this.Logger = new Logger(proxy);
 		}
 
 

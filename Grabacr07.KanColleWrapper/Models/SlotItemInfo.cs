@@ -26,6 +26,11 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return this.RawData.api_name; }
 		}
 
+		public string Type
+		{
+			get { return SlotItemType.ItemType[this.IconType]; }
+		}
+
 		public SlotItemIconType IconType
 		{
 			get { return this.iconType ?? (this.iconType = this.RawData.api_type.Length == 4 ? (SlotItemIconType)this.RawData.api_type[3] : SlotItemIconType.Unknown).Value; }

@@ -18,5 +18,7 @@
 								   HorizontalAlignment="Left"
 								   Padding="20,5"
 								   MethodName="Notify" />
+		<TextBlock Text="{Binding PageName}"
+				   Foreground="{DynamicResource AccentForegroundBrushKey}" />
 	</StackPanel>
 </UserControl>

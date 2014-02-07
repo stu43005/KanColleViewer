@@ -34,6 +34,8 @@ namespace Grabacr07.KanColleWrapper
 		/// </summary>
 		public MasterTable<ShipType> ShipTypes { get; private set; }
 
+		public MasterTable<CompositionQuest> CompositionQuests { get; private set; }
+
 
 		internal Master(KanColleProxy proxy)
 		{
@@ -56,6 +58,8 @@ namespace Grabacr07.KanColleWrapper
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_master/stype")
 				.TryParse<kcsapi_stype[]>()
 				.Subscribe(x => this.ShipTypes = new MasterTable<ShipType>(x.Select(s => new ShipType(s))));
+
+			this.CompositionQuests = new MasterTable<CompositionQuest>(CompositionQuest.List);
 		}
 	}
 }

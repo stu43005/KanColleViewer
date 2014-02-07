@@ -28,6 +28,8 @@ namespace Grabacr07.KanColleViewer.ViewModels
 
 		public VolumeViewModel Volume { get; private set; }
 
+		public GamePageViewModel GamePage { get; private set; }
+
 		#region SelectedItem 変更通知プロパティ
 
 		private TabItemViewModel _SelectedItem;
@@ -84,6 +86,8 @@ namespace Grabacr07.KanColleViewer.ViewModels
 			this.SelectedItem = this.TabItems.FirstOrDefault();
 
 			this.Volume = new VolumeViewModel();
+
+			this.GamePage = new GamePageViewModel();
 		}
 	}
 }

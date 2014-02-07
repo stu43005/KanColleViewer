@@ -120,4 +120,34 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// </summary>
 		ArtillerySpotter = 22,
 	}
+
+	public class SlotItemType
+	{
+		public static readonly IReadOnlyDictionary<SlotItemIconType, string> ItemType = new Dictionary<SlotItemIconType, string>
+		{
+			{SlotItemIconType.Unknown, "Unknown"},
+			{SlotItemIconType.MainCanonLight, "小口径主砲"},
+			{SlotItemIconType.MainCanonMedium, "中口径主砲"},
+			{SlotItemIconType.MainCanonHeavy, "大口径主砲"},
+			{SlotItemIconType.SecondaryCanon, "副砲"},
+			{SlotItemIconType.Torpedo, "魚雷"},
+			{SlotItemIconType.Fighter, "艦上戦闘機"},
+			{SlotItemIconType.DiveBomber, "艦上爆撃機"},
+			{SlotItemIconType.TorpedoBomber, "艦上攻撃機"},
+			{SlotItemIconType.ReconPlane, "艦上偵察機"},
+			{SlotItemIconType.ReconSeaplane, "水上偵察機"},
+			{SlotItemIconType.Rader, "電波探信儀"},
+			{SlotItemIconType.AAShell, "対空強化弾"},
+			{SlotItemIconType.APShell, "徹甲弾"},
+			{SlotItemIconType.DamageControl, "ダメコン"},
+			{SlotItemIconType.AAGun, "機銃"},
+			{SlotItemIconType.HighAngleGun, "高角砲"},
+			{SlotItemIconType.ASW, "爆雷投射機"},
+			{SlotItemIconType.Soner, "ソナー"},
+			{SlotItemIconType.EngineImprovement, "機関部強化"},
+			{SlotItemIconType.LandingCraft, "上陸用舟艇"},
+			{SlotItemIconType.Autogyro, "オートジャイロ"},
+			{SlotItemIconType.ArtillerySpotter, "指揮連絡機"},
+		};
+	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -71,6 +72,8 @@ namespace Grabacr07.KanColleWrapper
 					Debug.WriteLine("Fiddler session: ");
 					Debug.WriteLine(session);
 					Debug.WriteLine("");
+
+					StoreJson(session);
 				})
 #endif
 			#endregion
@@ -143,6 +146,15 @@ namespace Grabacr07.KanColleWrapper
 		{
 			// 「http://www.dmm.com:433/」の場合もあり、これは Session.isHTTPS では判定できない
 			return session.isHTTPS || session.fullUrl.StartsWith("https:") || session.fullUrl.Contains(":443");
+		}
+
+		private static void StoreJson(Session session)
+		{
+			const string path = @".\json\";
+			string fname = string.Format("{0:yyyy-MM-dd_HHmmss.fff}{1}.txt", DateTime.Now, session.PathAndQuery.Replace("/", "_"));
+			string file = Path.Combine(path, fname);
+			Directory.CreateDirectory(path);
+			File.AppendAllText(file, session.ToString());
 		}
 	}
 }

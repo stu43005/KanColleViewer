@@ -63,7 +63,35 @@ namespace Grabacr07.KanColleWrapper.Models
 		}
 
 
-		public Quest(kcsapi_quest rawData) : base(rawData) { }
+		public Quest(kcsapi_quest rawData) : base(rawData)
+		{
+			if ((QuestCategory)rawData.api_category == QuestCategory.Composition && (QuestState)rawData.api_state == QuestState.TakeOn)
+			{
+				CompositionQuest q = KanColleClient.Current.Master.CompositionQuests[rawData.api_no];
+				if (q != null)
+				{
+					ShipInfo[] shipinfo = KanColleClient.Current.Homeport.Ships.Values.Select(x => x.Info).Distinct(x => x.Id).ToArray();
+					int i;
+					for (i = 0; i < q.ShipIds.Length; i++)
+					{
+						int j;
+						for (j = 0; j < shipinfo.Length; j++)
+						{
+							if (shipinfo[j].Id == q.ShipIds[i])
+							{
+								break;
+							}
+						}
+						if (shipinfo.Length == j)
+							break;
+					}
+					if (i == q.ShipIds.Length)
+					{
+						rawData.api_state = (int)QuestState.Accomplished;
+					}
+				}
+			}
+		}
 
 
 		public override string ToString()
