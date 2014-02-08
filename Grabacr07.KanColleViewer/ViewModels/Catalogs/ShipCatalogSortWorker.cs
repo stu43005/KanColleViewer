@@ -39,6 +39,7 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 			};
 
 			this.currentSortTarget = this.noneColumn;
+			SetTarget(ShipCatalogSortTarget.Level);
 		}
 
 		public void SetTarget(ShipCatalogSortTarget sortTarget)
