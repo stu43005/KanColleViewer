@@ -396,10 +396,61 @@
   <data name="ReSortie_NotificationMessage_Title" xml:space="preserve">
     <value>疲労回復完成</value>
   </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>語言</value>
+  </data>
   <data name="IntegratedView" xml:space="preserve">
     <value>概觀</value>
   </data>
-  <data name="Settings_Language" xml:space="preserve">
-    <value>語言</value>
+  <data name="MessageBar_Repairing" xml:space="preserve">
+    <value>艦隊中有正在入渠的艦娘。 完成時間: {0:MM/dd HH\:mm} 距離完成還有: {1}:{2:mm\:ss}</value>
+  </data>
+  <data name="MessageBar_ReSortie_BadCondition" xml:space="preserve">
+    <value>疲勞中的艦娘</value>
+  </data>
+  <data name="MessageBar_ReSortie_CanNotReSortie" xml:space="preserve">
+    <value>艦隊中有{0}。</value>
+  </data>
+  <data name="MessageBar_ReSortie_CanReSortie" xml:space="preserve">
+    <value>可以出擊！</value>
+  </data>
+  <data name="MessageBar_ReSortie_LackForResources" xml:space="preserve">
+    <value>未補給的艦娘</value>
+  </data>
+  <data name="MessageBar_ReSortie_Remaining" xml:space="preserve">
+    <value>距離再次安全出擊還要: </value>
+  </data>
+  <data name="MessageBar_ReSortie_Separator" xml:space="preserve">
+    <value>、</value>
+  </data>
+  <data name="MessageBar_ReSortie_Wounded" xml:space="preserve">
+    <value>中破以上的艦娘</value>
+  </data>
+  <data name="Debug" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="Debug_NotificationMessage" xml:space="preserve">
+    <value>這個是測試通知。</value>
+  </data>
+  <data name="Debug_NotificationMessage_Title" xml:space="preserve">
+    <value>測試</value>
+  </data>
+  <data name="MessageBar_Expedition" xml:space="preserve">
+    <value>這個艦隊正在遠征中。</value>
+  </data>
+  <data name="MessageBar_Expedition_TimeCompletion" xml:space="preserve">
+    <value> 結束時間:</value>
+  </data>
+  <data name="MessageBar_Expedition_TimeRemaining" xml:space="preserve">
+    <value> 距離返回還有:</value>
+  </data>
+  <data name="MessageBar_Repairing_Null" xml:space="preserve">
+    <value>艦隊中有正在入渠的艦娘。</value>
+  </data>
+  <data name="StartContent_ClearCacheButton" xml:space="preserve">
+    <value>刪除暫存檔</value>
+  </data>
+  <data name="StartContent_ClearCacheButtonMessage" xml:space="preserve">
+    <value>暫存檔已經刪除了</value>
   </data>
 </root>
