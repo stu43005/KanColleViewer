@@ -173,12 +173,7 @@ namespace Grabacr07.KanColleWrapper
 				while (this.questPages.Count < questlist.api_page_count) this.questPages.Add(null);
 			}
 
-			var page = questlist.api_disp_page - 1;
-			if (page >= this.questPages.Count) page = this.questPages.Count - 1;
-
-			this.questPages[page] = new ConcurrentDictionary<int, Quest>();
-
-			if (questlist.api_list == null)
+			if (questlist.api_page_count < 1)
 			{
 				this.IsEmpty = true;
 				this.All = this.Current = new List<Quest>();
@@ -186,6 +181,11 @@ namespace Grabacr07.KanColleWrapper
 			else
 			{
 				this.IsEmpty = false;
+
+				var page = questlist.api_disp_page - 1;
+				if (page >= this.questPages.Count) page = this.questPages.Count - 1;
+
+				this.questPages[page] = new ConcurrentDictionary<int, Quest>();
 
 				questlist.api_list.Select(x => new Quest(x))
 					.ForEach(x => this.questPages[page].AddOrUpdate(x.Id, x, (_, __) => x));
