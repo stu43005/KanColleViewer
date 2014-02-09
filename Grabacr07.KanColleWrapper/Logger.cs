@@ -1,4 +1,5 @@
-﻿using Fiddler;
+﻿using Codeplex.Data;
+using Fiddler;
 using Grabacr07.KanColleWrapper.Internal;
 using Grabacr07.KanColleWrapper.Models;
 using Grabacr07.KanColleWrapper.Models.Raw;
@@ -6,6 +7,7 @@ using Livet;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -40,7 +42,8 @@ namespace Grabacr07.KanColleWrapper
 				.Subscribe(this.BattleResult);
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_mission/result")
-				.TryParse<kcsapi_missionresult>()
+				.Select(MissionResultSerialize)
+				.Where(x => x != null)
 				.Subscribe(this.MissionResult);
 		}
 
@@ -106,6 +109,34 @@ namespace Grabacr07.KanColleWrapper
 				br.api_enemy_info != null ? br.api_enemy_info.api_deck_name : "",
 				br.api_get_ship != null ? br.api_get_ship.api_ship_type : "",
 				br.api_get_ship != null ? br.api_get_ship.api_ship_name : "");
+		}
+
+		private static kcsapi_missionresult MissionResultSerialize(Session session)
+		{
+			try
+			{
+				var djson = DynamicJson.Parse(session.GetResponseAsJson());
+
+				int[] api_get_material;
+				if (Object.ReferenceEquals(djson.api_data.api_get_material.GetType(), (0.0).GetType()))
+					api_get_material = new int[] { 0, 0, 0, 0 };
+				else
+					api_get_material = djson.api_data.api_get_material;
+
+				var missionresult = new kcsapi_missionresult
+				{
+					api_clear_result = Convert.ToInt32(djson.api_data.api_clear_result),
+					api_quest_name = Convert.ToString(djson.api_data.api_quest_name),
+					api_get_material = api_get_material,
+				};
+
+				return missionresult;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+				return null;
+			}
 		}
 
 		private void MissionResult(kcsapi_missionresult mission)
