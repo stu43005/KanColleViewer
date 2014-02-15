@@ -187,8 +187,11 @@ namespace Grabacr07.KanColleWrapper
 
 				this.questPages[page] = new ConcurrentDictionary<int, Quest>();
 
-				questlist.api_list.Select(x => new Quest(x))
-					.ForEach(x => this.questPages[page].AddOrUpdate(x.Id, x, (_, __) => x));
+				if (questlist.api_list != null)
+				{
+					questlist.api_list.Select(x => new Quest(x))
+						.ForEach(x => this.questPages[page].AddOrUpdate(x.Id, x, (_, __) => x));
+				}
 
 				this.All = this.questPages.Where(x => x != null)
 					.SelectMany(x => x.Select(kvp => kvp.Value))
