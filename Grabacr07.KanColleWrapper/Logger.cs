@@ -118,7 +118,7 @@ namespace Grabacr07.KanColleWrapper
 				var djson = DynamicJson.Parse(session.GetResponseAsJson());
 
 				int[] api_get_material;
-				if (Object.ReferenceEquals(djson.api_data.api_get_material.GetType(), (0.0).GetType()))
+				if (djson.api_data.api_get_material is double)
 					api_get_material = new int[] { 0, 0, 0, 0 };
 				else
 					api_get_material = djson.api_data.api_get_material;
