@@ -60,8 +60,18 @@ namespace Grabacr07.KanColleViewer.Views.Behaviors
 			//	window.SizeToContent = SizeToContent.Width;
 			//}
 
-			this.AssociatedObject.Width = 800 / dpi.ScaleX;
-			this.AssociatedObject.Height = 480 / dpi.ScaleY;
+			this.AssociatedObject.Width = 800;
+			this.AssociatedObject.Height = 480;
+
+			if (!document.url.Contains(".swf?"))
+			{
+				document.parentWindow.execScript(@"(function () {
+	var game = document.getElementById('game_frame');
+	game.style.zoom = " + dpi.ScaleX.ToString().Replace(",", ".") + @";
+	game.style.marginLeft = -1 * game.getAttribute('width') / 2 * game.style.zoom + 'px';
+	game.style.top = -16 * game.style.zoom + 'px';
+}());");
+			}
 
 			if (window != null)
 			{
