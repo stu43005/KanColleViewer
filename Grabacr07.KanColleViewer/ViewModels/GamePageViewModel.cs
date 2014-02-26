@@ -46,7 +46,10 @@ namespace Grabacr07.KanColleViewer.ViewModels
 					return;
 			}
 
-			List<Quest> Quests = KanColleClient.Current.Homeport.Quests.All.Where(x => x.State == QuestState.None && x.Id / 100 == prefix).ToList();
+			List<Quest> Quests = KanColleClient.Current.Homeport.Quests.All
+				.Where(x => x.Type == QuestType.Daily || x.Type == QuestType.Weekly)
+				.Where(x => x.State == QuestState.None && x.Id / 100 == prefix)
+				.ToList();
 			if (Quests.Count > 0)
 			{
 				WindowsNotification.Notifier.Show(
