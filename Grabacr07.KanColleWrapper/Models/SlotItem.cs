@@ -31,5 +31,23 @@ namespace Grabacr07.KanColleWrapper.Models
 		{
 			return string.Format("ID = {0}, Name = \"{1}\"", this.Id, this.Name);
 		}
+
+		#region static members
+
+		private static readonly SlotItem empty = new SlotItem(new kcsapi_slotitem()
+		{
+			api_id = -1,
+			api_name = "Empty",
+		})
+		{
+			Info = SlotItemInfo.Empty,
+		};
+
+		public static SlotItem Empty
+		{
+			get { return empty; }
+		}
+
+		#endregion
 	}
 }

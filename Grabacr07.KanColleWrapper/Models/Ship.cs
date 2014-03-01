@@ -147,6 +147,15 @@ namespace Grabacr07.KanColleWrapper.Models
 			}
 
 			this.SlotItems = this.RawData.api_slot.Select(id => this.homeport.SlotItems[id]).Where(x => x != null).ToArray();
+			if (this.SlotItems.Length < this.RawData.api_slotnum)
+			{
+				List<SlotItem> slot = new List<SlotItem>(this.SlotItems);
+				while (slot.Count < this.RawData.api_slotnum)
+				{
+					slot.Add(SlotItem.Empty);
+				}
+				this.SlotItems = slot.ToArray();
+			}
 			this.OnSlot = this.RawData.api_onslot;
 		}
 
