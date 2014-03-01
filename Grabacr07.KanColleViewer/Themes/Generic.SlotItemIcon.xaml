@@ -20,6 +20,19 @@
 		</Setter>
 		<Style.Triggers>
 			<Trigger Property="Type"
+					 Value="Empty">
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type controls:SlotItemIcon}">
+							<Path Stretch="Uniform"
+								  Data="M100,100 L100,600 600,600 600,100 z"
+								  Stroke="{DynamicResource InactiveForegroundBrushKey}"
+								  StrokeThickness="2" />
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="Type"
 					 Value="MainCanonLight">
 				<Setter Property="Template">
 					<Setter.Value>

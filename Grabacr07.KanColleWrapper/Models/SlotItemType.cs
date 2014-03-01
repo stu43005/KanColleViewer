@@ -8,6 +8,7 @@ namespace Grabacr07.KanColleWrapper.Models
 {
 	public enum SlotItemIconType
 	{
+		Empty = -1,
 		Unknown = 0,
 
 		/// <summary>
@@ -140,6 +141,7 @@ namespace Grabacr07.KanColleWrapper.Models
 	{
 		public static readonly IReadOnlyDictionary<SlotItemIconType, string> ItemType = new Dictionary<SlotItemIconType, string>
 		{
+			{SlotItemIconType.Empty, "Empty"},
 			{SlotItemIconType.Unknown, "Unknown"},
 			{SlotItemIconType.MainCanonLight, "小口径主砲"},
 			{SlotItemIconType.MainCanonMedium, "中口径主砲"},
