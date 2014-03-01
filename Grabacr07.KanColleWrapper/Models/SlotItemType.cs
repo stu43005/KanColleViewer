@@ -163,6 +163,9 @@ namespace Grabacr07.KanColleWrapper.Models
 			{SlotItemIconType.LandingCraft, "上陸用舟艇"},
 			{SlotItemIconType.Autogyro, "オートジャイロ"},
 			{SlotItemIconType.ArtillerySpotter, "指揮連絡機"},
+			{SlotItemIconType.AntiTorpedoBulge, "増設バルジ"},
+			{SlotItemIconType.Searchlight, "探照灯"},
+			{SlotItemIconType.DrumCanister, "ドラム缶"},
 		};
 	}
 }
