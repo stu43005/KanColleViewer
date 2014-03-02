@@ -70,7 +70,7 @@
 		<Border Grid.Row="1"
 				BorderThickness="1"
 				BorderBrush="{DynamicResource BorderBrushKey}"
-				Margin="0,8,0,0"
+				Margin="8"
 				Padding="5">
 			<StackPanel>
 				<Grid>
@@ -104,7 +104,7 @@
 
 			<Border BorderBrush="{DynamicResource BorderBrushKey}"
 					BorderThickness="1"
-					Margin="8">
+					Margin="8,0,8,8">
 				<ListView ItemsSource="{Binding SlotItems}"
 						  ItemContainerStyle="{DynamicResource GridViewItemContainerStyleKey}">
 					<ListView.Resources>
@@ -172,7 +172,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="火力" />
 								</GridViewColumn.Header>
@@ -184,7 +185,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="雷装" />
 								</GridViewColumn.Header>
@@ -196,7 +198,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="爆装" />
 								</GridViewColumn.Header>
@@ -208,7 +211,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="対空" />
 								</GridViewColumn.Header>
@@ -220,7 +224,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="対潜" />
 								</GridViewColumn.Header>
@@ -232,7 +237,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="索敵" />
 								</GridViewColumn.Header>
@@ -244,7 +250,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="命中" />
 								</GridViewColumn.Header>
@@ -256,7 +263,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="回避" />
 								</GridViewColumn.Header>
@@ -268,7 +276,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="装甲" />
 								</GridViewColumn.Header>
@@ -280,7 +289,8 @@
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
 
-							<GridViewColumn Width="36">
+							<GridViewColumn Width="36"
+											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
 									<TextBlock Text="射程" />
 								</GridViewColumn.Header>
