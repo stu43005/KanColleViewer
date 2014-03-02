@@ -48,6 +48,25 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 
 		#endregion
 
+		#region ShowSlotItemStatus 変更通知プロパティ
+
+		private bool _ShowSlotItemStatus;
+
+		public bool ShowSlotItemStatus
+		{
+			get { return this._ShowSlotItemStatus; }
+			set
+			{
+				if (this._ShowSlotItemStatus != value)
+				{
+					this._ShowSlotItemStatus = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 
 		public SlotItemCatalogViewModel()
 		{

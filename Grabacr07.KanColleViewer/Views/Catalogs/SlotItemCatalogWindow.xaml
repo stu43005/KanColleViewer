@@ -32,6 +32,7 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
@@ -66,7 +67,33 @@
 		</Border>
 		<!-- #endregion -->
 
-		<DockPanel Grid.Row="1">
+		<Border Grid.Row="1"
+				BorderThickness="1"
+				BorderBrush="{DynamicResource BorderBrushKey}"
+				Margin="0,8,0,0"
+				Padding="5">
+			<StackPanel>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="10" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<TextBlock Margin="0,2">
+						<Run Text="ステータス" />
+						<Run Text=":" />
+					</TextBlock>
+					<WrapPanel Grid.Column="2">
+						<CheckBox IsChecked="{Binding ShowSlotItemStatus, Mode=TwoWay}"
+								  Margin="0,2">
+							<TextBlock Text="ステータスを表示します" />
+						</CheckBox>
+					</WrapPanel>
+				</Grid>
+			</StackPanel>
+		</Border>
+
+		<DockPanel Grid.Row="2">
 			<!--<Border DockPanel.Dock="Top"
 					Margin="8,0,8,8">
 				<metro2:CallMethodButton Content="表示の更新"
@@ -354,7 +381,7 @@
 			</Border>
 		</DockPanel>
 
-		<Border Grid.Row="1"
+		<Border Grid.Row="2"
 				Background="{DynamicResource ThemeBrushKey}"
 				BorderBrush="{DynamicResource BorderBrushKey}"
 				BorderThickness="1"
