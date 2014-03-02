@@ -266,32 +266,6 @@
 							<GridViewColumn Width="36"
 											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
 								<GridViewColumn.Header>
-									<TextBlock Text="回避" />
-								</GridViewColumn.Header>
-								<GridViewColumn.CellTemplate>
-									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.Flee, Mode=OneWay}"
-																 Margin="0,4" />
-									</DataTemplate>
-								</GridViewColumn.CellTemplate>
-							</GridViewColumn>
-
-							<GridViewColumn Width="36"
-											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
-								<GridViewColumn.Header>
-									<TextBlock Text="装甲" />
-								</GridViewColumn.Header>
-								<GridViewColumn.CellTemplate>
-									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.Armor, Mode=OneWay}"
-																 Margin="0,4" />
-									</DataTemplate>
-								</GridViewColumn.CellTemplate>
-							</GridViewColumn>
-
-							<GridViewColumn Width="36"
-											catalogs:GridViewColumnVisibilityManager.IsVisible="{Binding ShowSlotItemStatus}">
-								<GridViewColumn.Header>
 									<TextBlock Text="射程" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
