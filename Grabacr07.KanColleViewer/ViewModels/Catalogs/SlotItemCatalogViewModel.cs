@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Grabacr07.KanColleWrapper;
 using Grabacr07.KanColleWrapper.Models;
 using Livet;
+using Livet.EventListeners;
 
 namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 {
@@ -71,6 +72,13 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 		public SlotItemCatalogViewModel()
 		{
 			this.Title = "所有装備一覧";
+
+			this.CompositeDisposable.Add(new PropertyChangedEventListener(KanColleClient.Current.Homeport)
+			{
+				{ "Ships", (sender, args) => this.Update() },
+				{ "SlotItems", (sender, args) => this.Update() },
+			});
+
 			this.Update();
 		}
 
