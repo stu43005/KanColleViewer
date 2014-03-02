@@ -43,11 +43,83 @@ namespace Grabacr07.KanColleWrapper.Models
 		}
 
 		/// <summary>
+		/// 火力値を取得します。
+		/// </summary>
+		public int Firepower
+		{
+			get { return this.RawData.api_houg; }
+		}
+
+		/// <summary>
+		/// 雷装値を取得します。
+		/// </summary>
+		public int Torpedo
+		{
+			get { return this.RawData.api_raig; }
+		}
+
+		/// <summary>
+		/// 爆装値を取得します。
+		/// </summary>
+		public int Baku
+		{
+			get { return this.RawData.api_baku; }
+		}
+
+		/// <summary>
 		/// 対空値を取得します。
 		/// </summary>
 		public int AA
 		{
 			get { return this.RawData.api_tyku; }
+		}
+
+		/// <summary>
+		/// 対潜値を取得します。
+		/// </summary>
+		public int AS
+		{
+			get { return this.RawData.api_tais; }
+		}
+
+		/// <summary>
+		/// 索敵値を取得します。
+		/// </summary>
+		public int Saku
+		{
+			get { return this.RawData.api_saku; }
+		}
+
+		/// <summary>
+		/// 命中値を取得します。
+		/// </summary>
+		public int Hit
+		{
+			get { return this.RawData.api_houm; }
+		}
+
+		/// <summary>
+		/// 回避値を取得します。
+		/// </summary>
+		public int Flee
+		{
+			get { return this.RawData.api_houk; }
+		}
+
+		/// <summary>
+		/// 装甲値を取得します。
+		/// </summary>
+		public int Armor
+		{
+			get { return this.RawData.api_souk; }
+		}
+
+		/// <summary>
+		/// 射程値を取得します。
+		/// </summary>
+		public int Range
+		{
+			get { return this.RawData.api_leng; }
 		}
 
 		/// <summary>
