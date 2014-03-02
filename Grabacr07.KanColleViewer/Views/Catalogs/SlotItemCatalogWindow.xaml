@@ -150,10 +150,9 @@
 									<TextBlock Text="火力" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Firepower}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Firepower, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -163,10 +162,9 @@
 									<TextBlock Text="雷装" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Torpedo}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Torpedo, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -176,10 +174,9 @@
 									<TextBlock Text="爆装" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Baku}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Baku, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -189,10 +186,9 @@
 									<TextBlock Text="対空" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.AA}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.AA, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -202,10 +198,9 @@
 									<TextBlock Text="対潜" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.AS}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.AS, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -215,10 +210,9 @@
 									<TextBlock Text="索敵" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Saku}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Saku, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -228,10 +222,9 @@
 									<TextBlock Text="命中" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Hit}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Hit, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -241,10 +234,9 @@
 									<TextBlock Text="回避" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Flee}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Flee, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -254,10 +246,9 @@
 									<TextBlock Text="装甲" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Armor}"
-												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
-												   Margin="0,4" />
+									<DataTemplate>
+										<catalogs:SlotItemStatus Value="{Binding SlotItem.Armor, Mode=OneWay}"
+																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
@@ -268,9 +259,41 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
-										<TextBlock Text="{Binding SlotItem.Range}"
+										<TextBlock x:Name="Info"
 												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 												   Margin="0,4" />
+										<DataTemplate.Triggers>
+											<DataTrigger Binding="{Binding SlotItem.Range}"
+														 Value="0">
+												<Setter TargetName="Info"
+														Property="Text"
+														Value="-" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding SlotItem.Range}"
+														 Value="1">
+												<Setter TargetName="Info"
+														Property="Text"
+														Value="短" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding SlotItem.Range}"
+														 Value="2">
+												<Setter TargetName="Info"
+														Property="Text"
+														Value="中" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding SlotItem.Range}"
+														 Value="3">
+												<Setter TargetName="Info"
+														Property="Text"
+														Value="長" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding SlotItem.Range}"
+														 Value="4">
+												<Setter TargetName="Info"
+														Property="Text"
+														Value="超長" />
+											</DataTrigger>
+										</DataTemplate.Triggers>
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>
