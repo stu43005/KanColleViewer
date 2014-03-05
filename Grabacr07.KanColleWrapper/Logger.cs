@@ -156,14 +156,36 @@ namespace Grabacr07.KanColleWrapper
 			string file = Path.Combine(path, filename);
 			Directory.CreateDirectory(path);
 			FileInfo f = new FileInfo(file);
-			
-			if (!f.Exists || f.Length <= 0)
+
+			string oldData = "";
+			if (f.Exists && f.Length > 3)
 			{
+				string oldHeader;
+				using (StreamReader sr = f.OpenText())
+				{
+					oldHeader = sr.ReadLine();
+					// check file header
+					if (!oldHeader.Equals(header))
+					{
+						oldData = sr.ReadToEnd();
+					}
+				}
+				if (!oldData.Equals(""))
+				{
+					f.Delete(); // header is change, delete old file
+					f.Refresh();
+				}
+			}
+
+			if (!f.Exists || f.Length <= 3)
+			{
+				// write file header
 				using (FileStream fs = f.Create())
 				{
 					using (StreamWriter sw = new StreamWriter(fs, new UTF8Encoding(true)))
 					{
 						sw.WriteLine(header);
+						sw.Write(oldData); // if header is change, write old data.
 					}
 				}
 			}
