@@ -19,7 +19,15 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public string api_detail { get; set; }
 		public string api_quest_name { get; set; }
 		public int api_quest_level { get; set; }
-		public int[] api_get_material { get; set; }
+		public int[] api_get_material { get; set; } // mission failed: -1
 		public int[] api_useitem_flag { get; set; }
+		public kcsapi_mission_getitem[] api_get_item { get; set; } // rowData: api_get_item1, ...
+	}
+
+	public class kcsapi_mission_getitem
+	{
+		public int api_useitem_count { get; set; }
+		public int api_useitem_id { get; set; }
+		public string api_useitem_name { get; set; }
 	}
 }
