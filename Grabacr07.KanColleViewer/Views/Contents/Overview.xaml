@@ -81,6 +81,9 @@
 				<behaviors:FlickTrigger>
 					<behaviors:FlickFleetsAction TargetObject="{Binding Content.Fleets}" IsCyclic="True" Orientation="Horizontal"/>
 				</behaviors:FlickTrigger>
+				<behaviors:MouseWheelTrigger>
+					<behaviors:MouseWheelFleetsAction TargetObject="{Binding Content.Fleets}" IsCyclic="True"/>
+				</behaviors:MouseWheelTrigger>
 			</i:Interaction.Triggers>
 			<Grid DataContext="{Binding Content.Fleets.SelectedFleet}">
 				<StackPanel d:DataContext="{d:DesignData /SampleData/FleetViewModelSampleData.xaml}">
