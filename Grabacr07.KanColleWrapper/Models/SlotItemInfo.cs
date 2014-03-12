@@ -61,7 +61,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 爆装値を取得します。
 		/// </summary>
-		public int Baku
+		public int DiveBomb
 		{
 			get { return this.RawData.api_baku; }
 		}
@@ -85,7 +85,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 索敵値を取得します。
 		/// </summary>
-		public int Saku
+		public int SightRange
 		{
 			get { return this.RawData.api_saku; }
 		}
@@ -93,7 +93,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 命中値を取得します。
 		/// </summary>
-		public int Hit
+		public int Accuracy
 		{
 			get { return this.RawData.api_houm; }
 		}
@@ -101,7 +101,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 回避値を取得します。
 		/// </summary>
-		public int Flee
+		public int Evasion
 		{
 			get { return this.RawData.api_houk; }
 		}
@@ -117,7 +117,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 射程値を取得します。
 		/// </summary>
-		public int Range
+		public int AttackRange
 		{
 			get { return this.RawData.api_leng; }
 		}
