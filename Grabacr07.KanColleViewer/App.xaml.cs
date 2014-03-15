@@ -31,6 +31,9 @@ namespace Grabacr07.KanColleViewer
 			base.OnStartup(e);
 
 			this.DispatcherUnhandledException += (sender, args) => ReportException(sender, args.Exception);
+#if DEBUG
+			Debug.Listeners.Add(new TextWriterTraceListener("debug.log"));
+#endif
 
 			DispatcherHelper.UIDispatcher = this.Dispatcher;
 			ProductInfo = new ProductInfo();
