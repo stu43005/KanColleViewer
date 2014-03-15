@@ -178,7 +178,7 @@ namespace Grabacr07.KanColleWrapper
 
 			if (mission.api_get_item != null)
 			{
-				for (int i = 0; i < mission.api_useitem_flag.Length; i++)
+				for (int i = 0; i < mission.api_useitem_flag.Length && i < mission.api_get_item.Length; i++)
 				{
 					var item = mission.api_get_item[i];
 					switch (mission.api_useitem_flag[i])
