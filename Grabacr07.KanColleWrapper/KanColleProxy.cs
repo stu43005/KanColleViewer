@@ -70,7 +70,7 @@ namespace Grabacr07.KanColleWrapper
 				{
 					Debug.WriteLine("==================================================");
 					Debug.WriteLine("Fiddler session: ");
-					Debug.WriteLine(session);
+					Debug.WriteLine(session.ToString(true));
 					Debug.WriteLine("");
 
 					StoreJson(session);
