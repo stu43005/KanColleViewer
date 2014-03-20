@@ -148,7 +148,7 @@
     <value>※任務進度 (50 %, 80 %) 和遊戲中顯示的相同。它不會對敵方艦隊的擊破數和遠征的成功數做計數。</value>
   </data>
   <data name="Settings_BrowserControl_Notice" xml:space="preserve">
-    <value>※請注意這將會離開遊戲頁面</value>
+    <value>※請注意這動作將會離開遊戲</value>
   </data>
   <data name="Settings_Screenshot_FolderSelectionDialog_OpenButton" xml:space="preserve">
     <value>瀏覽</value>
@@ -256,7 +256,7 @@
     <value>螢幕截圖儲存失敗: </value>
   </data>
   <data name="Screenshot_Saved" xml:space="preserve">
-    <value>螢幕截圖保存成功: </value>
+    <value>螢幕截圖儲存成功: </value>
   </data>
   <data name="Homeport_FleetHQ" xml:space="preserve">
     <value>司令部</value>
@@ -394,7 +394,7 @@
     <value>「{0}」全部艦娘的疲勞已經恢復了。</value>
   </data>
   <data name="ReSortie_NotificationMessage_Title" xml:space="preserve">
-    <value>疲労回復完成</value>
+    <value>疲勞回復完成</value>
   </data>
   <data name="Settings_Language" xml:space="preserve">
     <value>語言</value>
