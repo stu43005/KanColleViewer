@@ -139,6 +139,10 @@
 														 IsCyclic="True"
 														 Orientation="Horizontal" />
 						</behaviors:FlickTrigger>
+						<behaviors:MouseWheelTrigger>
+							<behaviors:MouseWheelFleetsAction TargetObject="{Binding}"
+															  IsCyclic="True"/>
+						</behaviors:MouseWheelTrigger>
 					</i:Interaction.Triggers>
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>

@@ -14,8 +14,7 @@ namespace Grabacr07.KanColleViewer.Views.Behaviors
 
 		protected override void Invoke(object parameter)
 		{
-			if (!(parameter is int))
-				return;
+			if (!(parameter is int)) return;
 
 			var Delta = (int)parameter;
 			if (Delta < 0)
@@ -30,26 +29,32 @@ namespace Grabacr07.KanColleViewer.Views.Behaviors
 
 		private void Next()
 		{
-			if (this.Target == null)
-				return;
+			if (this.Target == null) return;
 
 			var selectedIndex = Array.IndexOf(this.Target.Fleets, this.Target.SelectedFleet);
 			if (selectedIndex < this.Target.Fleets.Length - 1)
+			{
 				this.Target.SelectedFleet = this.Target.Fleets[selectedIndex + 1];
+			}
 			else if (this.IsCyclic)
+			{
 				this.Target.SelectedFleet = this.Target.Fleets.First();
+			}
 		}
 
 		private void Previous()
 		{
-			if (this.Target == null)
-				return;
+			if (this.Target == null) return;
 
 			var selectedIndex = Array.IndexOf(this.Target.Fleets, this.Target.SelectedFleet);
 			if (selectedIndex > 0)
+			{
 				this.Target.SelectedFleet = this.Target.Fleets[selectedIndex - 1];
+			}
 			else if (this.IsCyclic)
+			{
 				this.Target.SelectedFleet = this.Target.Fleets.Last();
+			}
 		}
 	}
 }
