@@ -39,6 +39,7 @@ namespace Grabacr07.KanColleWrapper
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/createship")
 				.TryParse()
+				.Where(x => x != null && x.IsSuccess)
 				.Subscribe(x => this.CreateShip(x.RequestBody));
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/kdock")
@@ -87,7 +88,7 @@ namespace Grabacr07.KanColleWrapper
 					KanColleClient.Current.Master.Ships[dock.api_created_ship_id].Name,
 					KanColleClient.Current.Master.Ships[dock.api_created_ship_id].ShipType.Name,
 					dock.api_item1, dock.api_item2, dock.api_item3, dock.api_item4, dock.api_item5,
-					docks.Where(dock => dock.api_state == 0).Count(),
+					docks.Where(d => d.api_state == 0).Count(),
 					KanColleClient.Current.Homeport.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Secretary.Info.Name, KanColleClient.Current.Homeport.Secretary.Level),
 					KanColleClient.Current.Homeport.Admiral.Level);
 				this.waitingForShip = false;

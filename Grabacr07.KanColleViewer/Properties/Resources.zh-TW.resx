@@ -471,4 +471,10 @@
   <data name="ZoomFactorSelector_Tooltip" xml:space="preserve">
     <value>調整遊戲畫面顯示的尺寸</value>
   </data>
+  <data name="Settings_Logging" xml:space="preserve">
+    <value>日誌</value>
+  </data>
+  <data name="Settings_Logging_Enable" xml:space="preserve">
+    <value>記錄掉落艦娘、建造、装備開発、遠征日誌</value>
+  </data>
 </root>
