@@ -52,6 +52,9 @@ namespace Grabacr07.KanColleWrapper
 
 		public GamePage GamePage { get; private set; }
 
+		/// <summary>
+		/// Logs events such as ship drops, crafts, and item developments.
+		/// </summary>
 		public Logger Logger { get; private set; }
 
 		#region Admiral 変更通知プロパティ
@@ -226,9 +229,9 @@ namespace Grabacr07.KanColleWrapper
 
 			this.Dockyard = new Dockyard(proxy);
 			this.Repairyard = new Repairyard(this, proxy);
+			this.Logger = new Logger(proxy);
 			this.Quests = new Quests(proxy);
 			this.GamePage = new GamePage(proxy);
-			this.Logger = new Logger(proxy);
 		}
 
 

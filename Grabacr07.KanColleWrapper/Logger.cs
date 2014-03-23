@@ -20,20 +20,26 @@ namespace Grabacr07.KanColleWrapper
 {
 	public class Logger : NotificationObject
 	{
-		private bool waitingForKShip = false;
-		private int kdockid = 0;
+		public bool EnableLogging { get; set; }
+
+		private bool waitingForShip;
+		private int dockid;
 		private NameValueCollection createShipRequest;
 
 		internal Logger(KanColleProxy proxy)
 		{
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/createitem")
-				.Select(x => { SvData<kcsapi_createitem> result; return SvData.TryParse(x, out result) ? result : null; })
+				.Select(x =>
+				{
+					SvData<kcsapi_createitem> result;
+					return SvData.TryParse(x, out result) ? result : null;
+				})
 				.Where(x => x != null && x.IsSuccess)
 				.Subscribe(x => this.CreateItem(x.Data, x.RequestBody));
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/createship")
 				.TryParse()
-				.Subscribe(this.CreateShip);
+				.Subscribe(x => this.CreateShip(x.RequestBody));
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/kdock")
 				.TryParse<kcsapi_kdock[]>()
@@ -51,7 +57,7 @@ namespace Grabacr07.KanColleWrapper
 
 		private void CreateItem(kcsapi_createitem item, NameValueCollection req)
 		{
-			Log("Create_Item_log.csv",
+			this.Log("Create_Item_log.csv",
 				"日付,開発装備,種別,燃料,弾薬,鋼材,ボーキ,秘書艦,司令部Lv",
 				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8}",
 				DateTime.Now,
@@ -62,48 +68,35 @@ namespace Grabacr07.KanColleWrapper
 				KanColleClient.Current.Homeport.Admiral.Level);
 		}
 
-		private void CreateShip(SvData data)
+		private void CreateShip(NameValueCollection req)
 		{
-			this.waitingForKShip = true;
-			this.kdockid = Int32.Parse(data.RequestBody["api_kdock_id"]);
-			this.createShipRequest = data.RequestBody;
+			this.waitingForShip = true;
+			this.dockid = Int32.Parse(req["api_kdock_id"]);
+			this.createShipRequest = req;
 		}
 
-		private void KDock(kcsapi_kdock[] kdocks)
+		private void KDock(kcsapi_kdock[] docks)
 		{
-			if (this.waitingForKShip)
+			foreach (var dock in docks.Where(dock => this.waitingForShip && dock.api_id == this.dockid))
 			{
-				int freecount = 0;
-				foreach (var kdock in kdocks)
-				{
-					if (kdock.api_state == 0)
-						freecount++;
-				}
-
-				foreach (var kdock in kdocks)
-				{
-					if (kdock.api_id == this.kdockid)
-					{
-						Log("Create_Ship_log.csv",
-							"日付,種類,名前,艦種,燃料,弾薬,鋼材,ボーキ,開発資材,空きドック,秘書艦,司令部Lv",
-							@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
-							DateTime.Now,
-							this.createShipRequest["api_large_flag"] == "1" ? "大型艦建造" : "通常艦建造",
-							KanColleClient.Current.Master.Ships[kdock.api_created_ship_id].Name,
-							KanColleClient.Current.Master.Ships[kdock.api_created_ship_id].ShipType.Name,
-							kdock.api_item1, kdock.api_item2, kdock.api_item3, kdock.api_item4, kdock.api_item5, freecount,
-							KanColleClient.Current.Homeport.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Secretary.Info.Name, KanColleClient.Current.Homeport.Secretary.Level),
-							KanColleClient.Current.Homeport.Admiral.Level);
-						this.waitingForKShip = false;
-						break;
-					}
-				}
+				this.Log("Create_Ship_log.csv",
+					"日付,種類,名前,艦種,燃料,弾薬,鋼材,ボーキ,開発資材,空きドック,秘書艦,司令部Lv",
+					@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}",
+					DateTime.Now,
+					this.createShipRequest["api_large_flag"] == "1" ? "大型艦建造" : "通常艦建造",
+					KanColleClient.Current.Master.Ships[dock.api_created_ship_id].Name,
+					KanColleClient.Current.Master.Ships[dock.api_created_ship_id].ShipType.Name,
+					dock.api_item1, dock.api_item2, dock.api_item3, dock.api_item4, dock.api_item5,
+					docks.Where(dock => dock.api_state == 0).Count(),
+					KanColleClient.Current.Homeport.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Secretary.Info.Name, KanColleClient.Current.Homeport.Secretary.Level),
+					KanColleClient.Current.Homeport.Admiral.Level);
+				this.waitingForShip = false;
 			}
 		}
 
 		private void BattleResult(kcsapi_battleresult br)
 		{
-			Log("Battle_log.csv",
+			this.Log("Battle_log.csv",
 				"日付,海域,ランク,敵艦隊,ドロップ艦種,ドロップ艦娘",
 				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5}",
 				DateTime.Now,
@@ -210,7 +203,7 @@ namespace Grabacr07.KanColleWrapper
 				}
 			}
 
-			Log("Mission_log.csv",
+			this.Log("Mission_log.csv",
 				"日付,結果,遠征,燃料,弾薬,鋼材,ボーキ,高速修復材,高速建造材,開発資材,家具コイン",
 				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
 				DateTime.Now,
@@ -222,6 +215,8 @@ namespace Grabacr07.KanColleWrapper
 
 		private void Log(string filename, string header, string format, params object[] args)
 		{
+			if (!this.EnableLogging) return;
+
 			const string path = @".\logs\";
 			string file = Path.Combine(path, filename);
 			Directory.CreateDirectory(path);

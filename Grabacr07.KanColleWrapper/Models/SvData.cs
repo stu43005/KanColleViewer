@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Collections.Specialized;
 using Fiddler;
 using Grabacr07.KanColleWrapper.Models.Raw;
 using Grabacr07.KanColleWrapper.Internal;
@@ -31,7 +31,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return this.RawData.api_data_deck; }
 		}
 
-		public NameValueCollection RequestBody { get; private set; }
+		public NameValueCollection RequestBody { get; set; }
 
 		public SvData(svdata<T> rawData, string reqBody)
 			: base(rawData)
@@ -47,7 +47,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return this.RawData.api_result == 1; }
 		}
 
-		public NameValueCollection RequestBody { get; private set; }
+		public NameValueCollection RequestBody { get; set; }
 
 		public SvData(svdata rawData, string reqBody)
 			: base(rawData)

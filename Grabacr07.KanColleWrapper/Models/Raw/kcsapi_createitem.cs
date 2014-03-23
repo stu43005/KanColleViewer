@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grabacr07.KanColleWrapper.Models.Raw
 {
+	// ReSharper disable InconsistentNaming
 	public class kcsapi_createitem
 	{
 		public int api_id { get; set; }
@@ -14,4 +15,5 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public int api_shizai_flag { get; set; }
 		public string api_fdata { get; set; }
 	}
+	// ReSharper restore InconsistentNaming
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Grabacr07.KanColleWrapper.Models.Raw
 {
+	// ReSharper disable InconsistentNaming
 	public class kcsapi_battleresult
 	{
 		public int[] api_ship_id { get; set; }
@@ -29,13 +30,6 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public int api_get_eventflag { get; set; }
 	}
 
-	public class kcsapi_enemyinfo
-	{
-		public string api_level { get; set; }
-		public string api_rank { get; set; }
-		public string api_deck_name { get; set; }
-	}
-
 	public class kcsapi_getship
 	{
 		public int api_ship_id { get; set; }
@@ -44,4 +38,11 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public string api_ship_getmes { get; set; }
 	}
 
+	public class kcsapi_enemyinfo
+	{
+		public string api_level { get; set; }
+		public string api_rank { get; set; }
+		public string api_deck_name { get; set; }
+	}
+	// ReSharper restore InconsistentNaming
 }

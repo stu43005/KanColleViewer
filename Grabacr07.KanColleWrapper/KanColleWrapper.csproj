@@ -104,6 +104,7 @@
     <Compile Include="Models\Raw\kcsapi_battleresult.cs" />
     <Compile Include="Models\Raw\kcsapi_createitem.cs" />
     <Compile Include="Models\Raw\kcsapi_missionresult.cs" />
+    <Compile Include="Models\Raw\kcsapi_createship.cs" />
     <Compile Include="Models\Raw\kcsapi_quest.cs" />
     <Compile Include="Models\Raw\kcsapi_questlist.cs" />
     <Compile Include="Models\Raw\kcsapi_ship3.cs" />
