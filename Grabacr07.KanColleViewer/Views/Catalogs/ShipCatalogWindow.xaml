@@ -536,12 +536,21 @@
 										<TextBlock FontSize="9"
 												   Margin="0,3">
 											<Run Text="Lv." />
-											<Run Text="{Binding Ship.Level, Mode=OneWay}"
+											<Run x:Name="Level"
+												 Text="{Binding Ship.Level, Mode=OneWay}"
 												 FontSize="12"
 												 Foreground="{DynamicResource ActiveForegroundBrushKey}" />
 											<Run Text="" />
 											<Run Text="{Binding Ship.ExpForNextLevel, StringFormat=Next:{0}, Mode=OneWay}" />
 										</TextBlock>
+										<DataTemplate.Triggers>
+											<DataTrigger Binding="{Binding Ship.CanRemodeling}"
+														 Value="True">
+												<Setter TargetName="Level"
+														Property="TextDecorations"
+														Value="Underline"/>
+											</DataTrigger>
+										</DataTemplate.Triggers>
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
 							</GridViewColumn>

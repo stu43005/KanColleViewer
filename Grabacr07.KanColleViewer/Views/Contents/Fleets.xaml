@@ -188,7 +188,8 @@
 										   Margin="10,0,10,10"
 										   Grid.RowSpan="2">
 									<Run Text="Lv." />
-									<Run Text="{Binding Ship.Level, Mode=OneWay}"
+									<Run x:Name="Level"
+										 Text="{Binding Ship.Level, Mode=OneWay}"
 										 Style="{DynamicResource PickupTextElementStyleKey}" />
 								</TextBlock>
 								<TextBlock Grid.Column="3"
@@ -274,6 +275,14 @@
 									   Style="{DynamicResource SeparatorRectangleStyleKey}"
 									   Margin="10,0" />
 						</StackPanel>
+						<DataTemplate.Triggers>
+							<DataTrigger Binding="{Binding Ship.CanRemodeling}"
+										 Value="True">
+								<Setter TargetName="Level"
+										Property="TextDecorations"
+										Value="Underline"/>
+							</DataTrigger>
+						</DataTemplate.Triggers>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>

@@ -131,6 +131,10 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return ConditionTypeHelper.ToConditionType(this.RawData.api_cond); }
 		}
 
+		public bool CanRemodeling
+		{
+			get { return Info.NextRemodelingLevel == null ? false : Level >= Info.NextRemodelingLevel; }
+		}
 
 		public SlotItem[] SlotItems { get; private set; }
 		public int[] OnSlot { get; private set; }

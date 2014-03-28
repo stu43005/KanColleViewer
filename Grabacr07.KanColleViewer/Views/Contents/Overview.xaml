@@ -174,7 +174,8 @@
 									<TextBlock Grid.Column="1"
 											   Margin="12,0,0,0">
 											<Run Text="Lv." />
-											<Run Text="{Binding Ship.Level, Mode=OneWay}"
+											<Run x:Name="Level"
+												 Text="{Binding Ship.Level, Mode=OneWay}"
 												 Style="{DynamicResource PickupTextElementStyleKey}" />
 											<LineBreak />
 											<Run Text="{Binding Ship.ExpForNextLevel, StringFormat=Next: {0}, Mode=OneWay}"
@@ -228,6 +229,14 @@
 									</Grid>
 								</Grid>
 							</StackPanel>
+							<DataTemplate.Triggers>
+								<DataTrigger Binding="{Binding Ship.CanRemodeling}"
+										 Value="True">
+									<Setter TargetName="Level"
+										Property="TextDecorations"
+										Value="Underline"/>
+								</DataTrigger>
+							</DataTemplate.Triggers>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
