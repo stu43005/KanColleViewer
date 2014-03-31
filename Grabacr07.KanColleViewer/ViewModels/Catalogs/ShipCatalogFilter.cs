@@ -169,7 +169,7 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 		public ShipLockFilter(Action updateAction)
 			: base(updateAction)
 		{
-			this._Locked = true;
+			this._Both = true;
 		}
 
 		public override bool Predicate(Ship ship)
