@@ -81,6 +81,24 @@ namespace Grabacr07.KanColleViewer.ViewModels.Contents.Fleets
 
 		#endregion
 
+		#region IsNotifyReadied 変更通知プロパティ
+
+		public bool IsNotifyReadied
+		{
+			get { return Settings.Current.NotifyReSortieReadied; }
+			set
+			{
+				if (Settings.Current.NotifyReSortieReadied != value)
+				{
+					Settings.Current.NotifyReSortieReadied = value;
+					this.Fleets.ForEach(x => x.ReSortie.IsNotifyReadied = value);
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		public bool IsSupportedNotification
 		{
 			get { return Helper.IsWindows8OrGreater; }
@@ -101,6 +119,7 @@ namespace Grabacr07.KanColleViewer.ViewModels.Contents.Fleets
 			this.Fleets = KanColleClient.Current.Homeport.Fleets.Select(kvp => new FleetViewModel(kvp.Value)).ToArray();
 			this.SelectedFleet = this.Fleets.FirstOrDefault();
 			this.Fleets.ForEach(x => x.Expedition.IsNotifyReturned = this.IsNotifyReturned);
+			this.Fleets.ForEach(x => x.ReSortie.IsNotifyReadied = this.IsNotifyReadied);
 		}
 	}
 }

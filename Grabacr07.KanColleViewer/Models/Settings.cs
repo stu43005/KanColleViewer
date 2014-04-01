@@ -189,6 +189,25 @@ namespace Grabacr07.KanColleViewer.Models
 
 		#endregion
 
+		#region NotifyReSortieReadied 変更通知プロパティ
+
+		private bool _NotifyReSortieReadied;
+
+		public bool NotifyReSortieReadied
+		{
+			get { return this._NotifyReSortieReadied; }
+			set
+			{
+				if (this._NotifyReSortieReadied != value)
+				{
+					this._NotifyReSortieReadied = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region NotifyRepairingCompleted 変更通知プロパティ
 
 		private bool _NotifyRepairingCompleted;
