@@ -32,7 +32,6 @@ namespace Grabacr07.KanColleWrapper.Models
 		private static readonly SlotItem empty = new SlotItem(new kcsapi_slotitem()
 		{
 			api_id = -1,
-			api_name = "Empty",
 		})
 		{
 			Info = SlotItemInfo.Empty,

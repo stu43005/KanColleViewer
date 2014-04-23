@@ -164,7 +164,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return dummy; }
 		}
 
-		private static readonly SlotItemInfo empty = new SlotItemInfo(new kcsapi_master_slotitem()
+		private static readonly SlotItemInfo empty = new SlotItemInfo(new kcsapi_mst_slotitem()
 		{
 			api_id = -1,
 			api_name = "Empty",
