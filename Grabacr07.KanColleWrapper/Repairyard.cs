@@ -45,6 +45,25 @@ namespace Grabacr07.KanColleWrapper
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/ndock")
 				.TryParse<kcsapi_ndock[]>()
 				.Subscribe(this.Update);
+
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_nyukyo/start")
+				.TryParse()
+				.Subscribe(this.RepairShip);
+		}
+
+		private void RepairShip(SvData svdata)
+		{
+			int api_ndock_id = Int32.Parse(svdata.RequestBody["api_ndock_id"]); // 1,2,3,4
+			int api_highspeed = Int32.Parse(svdata.RequestBody["api_highspeed"]); // 0,1
+			int api_ship_id = Int32.Parse(svdata.RequestBody["api_ship_id"]);
+
+			if (api_highspeed == 1)
+			{
+				var ship = this.homeport.Ships[api_ship_id];
+				if (ship != null) ship.Repair();
+			}
+
+			this.homeport.Fleets.ForEach(x => x.Value.UpdateShips());
 		}
 
 		internal void Update(kcsapi_ndock[] source)

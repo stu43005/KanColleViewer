@@ -187,6 +187,10 @@ namespace Grabacr07.KanColleWrapper.Models
 			this.OnSlot = onslot;
 		}
 
+		internal void Repair()
+		{
+			this.HP = this.HP.Update(this.HP.Maximum);
+		}
 
 		public override string ToString()
 		{

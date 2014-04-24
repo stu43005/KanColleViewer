@@ -182,7 +182,7 @@ namespace Grabacr07.KanColleWrapper
 			this.Fleets = new MemberTable<Fleet>();
 			this.SlotItems = new MemberTable<SlotItem>();
 			this.UseItems = new MemberTable<UseItem>();
-			this.Dockyard = new Dockyard(proxy);
+			this.Dockyard = new Dockyard(this, proxy);
 			this.Repairyard = new Repairyard(this, proxy);
 			this.Logger = new Logger(proxy);
 			this.Quests = new Quests(proxy);
@@ -206,6 +206,15 @@ namespace Grabacr07.KanColleWrapper
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_hokyu/charge")
 				.TryParse<kcsapi_charge>()
 				.Subscribe(this.Charge);
+
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_hensei/change")
+				.TryParse()
+				.Subscribe(this.FleetChange);
+
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kaisou/powerup")
+				.Select(x => { SvData<kcsapi_powerup> result; return SvData.TryParse(x, out result) ? result : null; })
+				.Where(x => x != null && x.IsSuccess)
+				.Subscribe(this.Powerup);
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/material")
 				.TryParse<kcsapi_material[]>()
@@ -247,6 +256,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/deck_port")
 				.TryParse<kcsapi_deck[]>()
 				.Subscribe(this.UpdateFleets);
+
 			this.GamePage = new GamePage(proxy);
 		}
 
@@ -281,6 +291,59 @@ namespace Grabacr07.KanColleWrapper
 			}
 
 			foreach (var f in Fleets.Values) f.UpdateShips();
+		}
+
+		private void FleetChange(SvData svdata)
+		{
+			int api_id = Int32.Parse(svdata.RequestBody["api_id"]); // 1,2,3,4
+			int api_ship_idx = Int32.Parse(svdata.RequestBody["api_ship_idx"]); // 0,1,2,3,4,5
+			int api_ship_id = Int32.Parse(svdata.RequestBody["api_ship_id"]);
+			var fleet = this.Fleets[api_id];
+
+			if (api_ship_id == -1)
+			{
+				fleet.RemoveShip(api_ship_idx);
+			}
+			else
+			{
+				var lastFleet = this.Fleets.Values.FirstOrDefault(f => f.Ships.Any(s => s.Id == api_ship_id));
+				if (lastFleet != null)
+				{
+					var lastIndex = lastFleet.Ships.Select((s, i) => s.Id == api_ship_id ? i : -1).First(i => i >= 0);
+
+					if (fleet.Ships.Length > api_ship_idx)
+					{
+						var lastShip = fleet.Ships[api_ship_idx];
+						lastFleet.AddShip(lastIndex, lastShip);
+					}
+					else
+					{
+						lastFleet.RemoveShip(lastIndex);
+					}
+				}
+				fleet.AddShip(api_ship_idx, this.Ships[api_ship_id]);
+			}
+		}
+
+		private void Powerup(SvData<kcsapi_powerup> svdata)
+		{
+			this.UpdateFleets(svdata.RawData.api_data.api_deck);
+
+			var api_ship = svdata.RawData.api_data.api_ship;
+			var api_id_items = svdata.RequestBody["api_id_items"].Split(',').Select(Int32.Parse);
+
+			var itemsShips = api_id_items.Select(id => this.Ships[id]);
+			var itemsSlotItems = itemsShips.SelectMany(s => s.SlotItems);
+
+			var slotitems = this.SlotItems.Values.ToList();
+			itemsSlotItems.ForEach(i => slotitems.Remove(i));
+			this.SlotItems = new MemberTable<SlotItem>(slotitems);
+
+			var ships = this.Ships.Values.ToList();
+			itemsShips.ForEach(s => ships.Remove(s));
+			ships.Remove(this.Ships[api_ship.api_id]);
+			ships.Add(new Ship(this, api_ship));
+			this.Ships = new MemberTable<Ship>(ships);
 		}
 	}
 }

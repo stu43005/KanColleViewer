@@ -219,13 +219,19 @@ namespace Grabacr07.KanColleWrapper.Models
 			this.Id = rawData.api_id;
 			this.Name = rawData.api_name;
 			this.Ships = rawData.api_ship.Select(id => this.homeport.Ships[id]).Where(x => x != null).ToArray();
+			this.Expedition.Update(rawData.api_mission);
+
+			this.UpdateValue();
+		}
+		
+		internal void UpdateValue()
+		{
 			this.TotalLevel = this.Ships.HasItems() ? this.Ships.Sum(x => x.Level) : 0;
 			this.AverageLevel = this.Ships.HasItems() ? (double)this.TotalLevel / this.Ships.Length : 0.0;
 			this.AirSuperiorityPotential = this.Ships.Sum(s => s.CalcAirSuperiorityPotential());
 			this.TotalViewRange = this.Ships.Sum(s => s.ViewRange);
 			this.Speed = this.Ships.All(s => s.Info.Speed == Speed.Fast) ? Speed.Fast : Speed.Low;
 			this.ReSortie.Update(this.Ships);
-			this.Expedition.Update(rawData.api_mission);
 
 			this.UpdateStatus();
 		}
@@ -243,6 +249,30 @@ namespace Grabacr07.KanColleWrapper.Models
 			this.RaisePropertyChanged("Ships");
 			this.ReSortie.Update(this.Ships);
 			this.UpdateStatus();
+		}
+
+		internal void RemoveShip(int index)
+		{
+			var ships = this.Ships.ToList();
+			ships.RemoveAt(index);
+			this.Ships = ships.ToArray();
+			this.UpdateValue();
+		}
+
+		internal void AddShip(int index, Ship ship)
+		{
+			if (this.Ships.Length > index)
+			{
+				this.Ships[index] = ship;
+				this.RaisePropertyChanged("Ships");
+			}
+			else
+			{
+				var ships = this.Ships.ToList();
+				ships.Add(ship);
+				this.Ships = ships.ToArray();
+			}
+			this.UpdateValue();
 		}
 
 		public override string ToString()

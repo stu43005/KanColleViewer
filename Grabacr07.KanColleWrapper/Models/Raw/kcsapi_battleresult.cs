@@ -26,11 +26,11 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public kcsapi_enemyinfo api_enemy_info { get; set; }
 		public int api_first_clear { get; set; }
 		public int[] api_get_flag { get; set; }
-		public kcsapi_getship api_get_ship { get; set; }
+		public kcsapi_dropship api_get_ship { get; set; }
 		public int api_get_eventflag { get; set; }
 	}
 
-	public class kcsapi_getship
+	public class kcsapi_dropship
 	{
 		public int api_ship_id { get; set; }
 		public string api_ship_type { get; set; }

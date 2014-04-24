@@ -16,6 +16,8 @@ namespace Grabacr07.KanColleWrapper
 	/// </summary>
 	public class Dockyard : NotificationObject
 	{
+		private readonly Homeport homeport;
+
 		#region Dock 変更通知プロパティ
 
 		private MemberTable<BuildingDock> _Docks;
@@ -35,13 +37,18 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
-		internal Dockyard(KanColleProxy proxy)
+		internal Dockyard(Homeport parent, KanColleProxy proxy)
 		{
+			this.homeport = parent;
 			this.Docks = new MemberTable<BuildingDock>();
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/kdock")
 				.TryParse<kcsapi_kdock[]>()
 				.Subscribe(this.Update);
+
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/getship")
+				.TryParse<kcsapi_getship>()
+				.Subscribe(this.GetShip);
 		}
 
 		private void Update(kcsapi_kdock[] source)
@@ -59,6 +66,19 @@ namespace Grabacr07.KanColleWrapper
 				this.Docks.ForEach(x => x.Value.Dispose());
 				this.Docks = new MemberTable<BuildingDock>(source.Select(x => new BuildingDock(x)));
 			}
+		}
+
+		private void GetShip(kcsapi_getship source)
+		{
+			this.Update(source.api_kdock);
+
+			var slotitems = this.homeport.SlotItems.Values;
+			slotitems = slotitems.Concat(source.api_slotitem.Select(s => new SlotItem(s)));
+			this.homeport.SlotItems = new MemberTable<SlotItem>(slotitems);
+
+			var ships = this.homeport.Ships.Values.ToList();
+			ships.Add(new Ship(this.homeport, source.api_ship));
+			this.homeport.Ships = new MemberTable<Ship>(ships);
 		}
 	}
 }
