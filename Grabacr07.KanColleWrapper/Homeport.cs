@@ -216,6 +216,16 @@ namespace Grabacr07.KanColleWrapper
 				.Where(x => x != null && x.IsSuccess)
 				.Subscribe(this.Powerup);
 
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/destroyship")
+				.Select(x => { SvData<kcsapi_destroyship> result; return SvData.TryParse(x, out result) ? result : null; })
+				.Where(x => x != null && x.IsSuccess)
+				.Subscribe(this.DestroyShip);
+
+			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/destroyitem2")
+				.Select(x => { SvData<kcsapi_destroyitem> result; return SvData.TryParse(x, out result) ? result : null; })
+				.Where(x => x != null && x.IsSuccess)
+				.Subscribe(this.DestroyItem);
+
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/material")
 				.TryParse<kcsapi_material[]>()
 				.Subscribe(x => this.Materials = new Materials(x.Select(m => new Material(m)).ToArray()));
@@ -333,17 +343,49 @@ namespace Grabacr07.KanColleWrapper
 			var api_id_items = svdata.RequestBody["api_id_items"].Split(',').Select(Int32.Parse);
 
 			var itemsShips = api_id_items.Select(id => this.Ships[id]);
-			var itemsSlotItems = itemsShips.SelectMany(s => s.SlotItems);
-
-			var slotitems = this.SlotItems.Values.ToList();
-			itemsSlotItems.ForEach(i => slotitems.Remove(i));
-			this.SlotItems = new MemberTable<SlotItem>(slotitems);
+			this.DeleteShips(itemsShips);
 
 			var ships = this.Ships.Values.ToList();
-			itemsShips.ForEach(s => ships.Remove(s));
 			ships.Remove(this.Ships[api_ship.api_id]);
 			ships.Add(new Ship(this, api_ship));
 			this.Ships = new MemberTable<Ship>(ships);
+			// TODO: update ship
+		}
+
+		private void DestroyShip(SvData<kcsapi_destroyship> svdata)
+		{
+			var api_ship_id = Int32.Parse(svdata.RequestBody["api_ship_id"]);
+			this.DeleteShip(this.Ships[api_ship_id]);
+		}
+
+		private void DestroyItem(SvData<kcsapi_destroyitem> svdata)
+		{
+			var api_slotitem_ids = svdata.RequestBody["api_slotitem_ids"].Split(',').Select(Int32.Parse);
+			var slotItems = api_slotitem_ids.Select(i => this.SlotItems[i]);
+
+			this.DeleteSlotItems(api_slotitem_ids.Select(i => this.SlotItems[i]));
+		}
+
+		internal void DeleteShip(Ship ship)
+		{
+			this.DeleteShips(new Ship[] { ship });
+		}
+
+		internal void DeleteShips(IEnumerable<Ship> ships)
+		{
+			var slotItems = ships.SelectMany(s => s.SlotItems);
+			this.DeleteSlotItems(slotItems);
+
+			var temp = this.Ships.Values.ToList();
+			ships.ForEach(i => temp.Remove(i));
+			this.Ships = new MemberTable<Ship>(temp);
+		}
+
+		internal void DeleteSlotItems(IEnumerable<SlotItem> slotItems)
+		{
+			var temp = this.SlotItems.Values.ToList();
+			slotItems.ForEach(i => temp.Remove(i));
+			this.SlotItems = new MemberTable<SlotItem>(temp);
 		}
 	}
 }
