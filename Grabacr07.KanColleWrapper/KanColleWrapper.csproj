@@ -119,7 +119,6 @@
     <Compile Include="Models\QuestType.cs" />
     <Compile Include="Models\Raw\kcsapi_destroyitem.cs" />
     <Compile Include="Models\Raw\kcsapi_destroyship.cs" />
-    <Compile Include="Models\Raw\kcsapi_powerup.cs" />
     <Compile Include="Models\Raw\kcsapi_getship.cs" />
     <Compile Include="Models\Raw\kcsapi_charge.cs" />
     <Compile Include="Models\Raw\kcsapi_battleresult.cs" />

@@ -43,25 +43,26 @@ namespace Grabacr07.KanColleWrapper
 			this.Docks = new MemberTable<RepairingDock>();
 
 			proxy.api_get_member_ndock.TryParse<kcsapi_ndock[]>().Subscribe(x => this.Update(x.Data));
-
-			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_nyukyo/start")
-				.TryParse()
-				.Subscribe(this.RepairShip);
+			proxy.api_req_nyukyo_start.TryParse().Subscribe(this.RepairShip);
 		}
 
 		private void RepairShip(SvData svdata)
 		{
-			int api_ndock_id = Int32.Parse(svdata.RequestBody["api_ndock_id"]); // 1,2,3,4
-			int api_highspeed = Int32.Parse(svdata.RequestBody["api_highspeed"]); // 0,1
-			int api_ship_id = Int32.Parse(svdata.RequestBody["api_ship_id"]);
+			int api_ndock_id = int.Parse(svdata.Request["api_ndock_id"]); // 1,2,3,4
+			int api_highspeed = int.Parse(svdata.Request["api_highspeed"]); // 0,1
+			int api_ship_id = int.Parse(svdata.Request["api_ship_id"]);
 
 			if (api_highspeed == 1)
 			{
-				var ship = this.homeport.Ships[api_ship_id];
-				if (ship != null) ship.Repair();
-			}
+				var ship = this.homeport.Organization.Ships[api_ship_id];
+				if (ship != null)
+				{
+					ship.Repair();
 
-			this.homeport.Fleets.ForEach(x => x.Value.UpdateShips());
+					var fleet = this.homeport.Organization.GetFleet(ship.Id);
+					if (ship != null) fleet.UpdateStatus();
+				}
+			}
 		}
 
 		internal void Update(kcsapi_ndock[] source)

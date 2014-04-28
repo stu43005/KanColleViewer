@@ -61,6 +61,18 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
+		public Ship Secretary
+		{
+			get
+			{
+				if (this.Fleets[1] != null)
+				{
+					return this.Fleets[1].Ships[0];
+				}
+				return null;
+			}
+		}
+
 
 		public Organization(Homeport parent, KanColleProxy proxy)
 		{
@@ -87,6 +99,10 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_req_hensei_change.TryParse().Subscribe(this.Change);
 			proxy.api_req_hokyu_charge.TryParse<kcsapi_charge>().Subscribe(x => this.Charge(x.Data));
 			proxy.api_req_kaisou_powerup.TryParse<kcsapi_powerup>().Subscribe(this.Powerup);
+
+			proxy.api_req_kousyou_getship.TryParse<kcsapi_getship>().Subscribe(x => this.GetShip(x.Data));
+			proxy.api_req_kousyou_destroyship.TryParse<kcsapi_destroyship>().Subscribe(this.DestroyShip);
+			proxy.api_req_kousyou_destroyitem2.TryParse<kcsapi_destroyitem>().Subscribe(this.DestroyItem);
 		}
 
 
@@ -237,6 +253,52 @@ namespace Grabacr07.KanColleWrapper
 			{
 				Debug.WriteLine("近代化改修による更新に失敗しました: {0}", ex);
 			}
+		}
+
+		private void GetShip(kcsapi_getship source)
+		{
+			this.homeport.Dockyard.Update(source.api_kdock);
+
+			var slotitems = this.homeport.SlotItems.Values;
+			slotitems = slotitems.Concat(source.api_slotitem.Select(s => new SlotItem(s)));
+			this.homeport.SlotItems = new MemberTable<SlotItem>(slotitems);
+
+			var ships = this.Ships.Values.ToList();
+			ships.Add(new Ship(this.homeport, source.api_ship));
+			this.Ships = new MemberTable<Ship>(ships);
+		}
+
+		private void DestroyShip(SvData<kcsapi_destroyship> svdata)
+		{
+			var ship = this.Ships[int.Parse(svdata.Request["api_ship_id"])];
+			this.DeleteShips(ship);
+		}
+
+		private void DestroyItem(SvData<kcsapi_destroyitem> svdata)
+		{
+			var slotItems = svdata.Request["api_slotitem_ids"]
+				.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+				.Select(int.Parse)
+				.Where(x => this.homeport.SlotItems.ContainsKey(x))
+				.Select(x => this.homeport.SlotItems[x]);
+
+			this.DeleteSlotItems(slotItems);
+		}
+
+		internal void DeleteShips(Ship ship)
+		{
+			this.DeleteShips(new[] { ship });
+		}
+
+		internal void DeleteShips(IEnumerable<Ship> ships)
+		{
+			this.DeleteSlotItems(ships.SelectMany(s => s.SlotItems));
+			this.Ships = new MemberTable<Ship>(this.Ships.Select(kvp => kvp.Value).Except(ships));
+		}
+
+		internal void DeleteSlotItems(IEnumerable<SlotItem> slotItems)
+		{
+			this.homeport.SlotItems = new MemberTable<SlotItem>(this.homeport.SlotItems.Select(kvp => kvp.Value).Except(slotItems));
 		}
 	}
 }

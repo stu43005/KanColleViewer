@@ -144,6 +144,46 @@ namespace Grabacr07.KanColleWrapper
 		}
 
 		/// <summary>
+		/// エンド ポイント "/kcsapi/api_req_kousyou/destroyship" からのセッションを配信します。
+		/// </summary>
+		public IObservable<Session> api_req_kousyou_destroyship
+		{
+			get { return this.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/destroyship"); }
+		}
+
+		/// <summary>
+		/// エンド ポイント "/kcsapi/api_req_kousyou/destroyitem2" からのセッションを配信します。
+		/// </summary>
+		public IObservable<Session> api_req_kousyou_destroyitem2
+		{
+			get { return this.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/destroyitem2"); }
+		}
+
+		/// <summary>
+		/// エンド ポイント "/kcsapi/api_req_kousyou/getship" からのセッションを配信します。
+		/// </summary>
+		public IObservable<Session> api_req_kousyou_getship
+		{
+			get { return this.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/getship"); }
+		}
+
+		/// <summary>
+		/// エンド ポイント "/kcsapi/api_req_mission/result" からのセッションを配信します。
+		/// </summary>
+		public IObservable<Session> api_req_mission_result
+		{
+			get { return this.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_mission/result"); }
+		}
+
+		/// <summary>
+		/// エンド ポイント "/kcsapi/api_req_nyukyo/start" からのセッションを配信します。
+		/// </summary>
+		public IObservable<Session> api_req_nyukyo_start
+		{
+			get { return this.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_nyukyo/start"); }
+		}
+
+		/// <summary>
 		/// エンド ポイント "/kcsapi/api_req_sortie/battleresult" からのセッションを配信します。
 		/// </summary>
 		public IObservable<Session> api_req_sortie_battleresult

@@ -33,7 +33,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().Subscribe(x => this.KDock(x.Data));
 			proxy.api_req_sortie_battleresult.TryParse<kcsapi_battleresult>().Subscribe(x => this.BattleResult(x.Data));
 
-			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_mission/result")
+			proxy.api_req_mission_result
 				.Select(MissionResultSerialize)
 				.Where(x => x != null)
 				.Subscribe(this.MissionResult);
@@ -48,14 +48,14 @@ namespace Grabacr07.KanColleWrapper
 				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[item.api_slotitem_id].Name : "失敗",
 				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[item.api_slotitem_id].Type : "",
 				req["api_item1"], req["api_item2"], req["api_item3"], req["api_item4"],
-				KanColleClient.Current.Homeport.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Secretary.Info.Name, KanColleClient.Current.Homeport.Secretary.Level),
+				KanColleClient.Current.Homeport.Organization.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Organization.Secretary.Info.Name, KanColleClient.Current.Homeport.Organization.Secretary.Level),
 				KanColleClient.Current.Homeport.Admiral.Level);
 		}
 
 		private void CreateShip(NameValueCollection req)
 		{
 			this.waitingForShip = true;
-			this.dockid = Int32.Parse(req["api_kdock_id"]);
+			this.dockid = int.Parse(req["api_kdock_id"]);
 			this.createShipRequest = req;
 		}
 
@@ -72,7 +72,7 @@ namespace Grabacr07.KanColleWrapper
 					KanColleClient.Current.Master.Ships[dock.api_created_ship_id].ShipType.Name,
 					dock.api_item1, dock.api_item2, dock.api_item3, dock.api_item4, dock.api_item5,
 					docks.Where(d => d.api_state == 0).Count(),
-					KanColleClient.Current.Homeport.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Secretary.Info.Name, KanColleClient.Current.Homeport.Secretary.Level),
+					KanColleClient.Current.Homeport.Organization.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Organization.Secretary.Info.Name, KanColleClient.Current.Homeport.Organization.Secretary.Level),
 					KanColleClient.Current.Homeport.Admiral.Level);
 				this.waitingForShip = false;
 			}

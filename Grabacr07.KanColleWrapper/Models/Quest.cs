@@ -70,7 +70,7 @@ namespace Grabacr07.KanColleWrapper.Models
 				CompositionQuest q = KanColleClient.Current.Master.CompositionQuests[rawData.api_no];
 				if (q != null)
 				{
-					ShipInfo[] shipinfo = KanColleClient.Current.Homeport.Ships.Values.Select(x => x.Info).Distinct(x => x.Id).ToArray();
+					ShipInfo[] shipinfo = KanColleClient.Current.Homeport.Organization.Ships.Values.Select(x => x.Info).Distinct(x => x.Id).ToArray();
 					int i;
 					for (i = 0; i < q.ShipIds.Length; i++)
 					{
