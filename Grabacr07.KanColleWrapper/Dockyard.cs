@@ -42,16 +42,14 @@ namespace Grabacr07.KanColleWrapper
 			this.homeport = parent;
 			this.Docks = new MemberTable<BuildingDock>();
 
-			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_get_member/kdock")
-				.TryParse<kcsapi_kdock[]>()
-				.Subscribe(this.Update);
+			proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().Subscribe(x => this.Update(x.Data));
 
 			proxy.ApiSessionSource.Where(x => x.PathAndQuery == "/kcsapi/api_req_kousyou/getship")
 				.TryParse<kcsapi_getship>()
 				.Subscribe(this.GetShip);
 		}
 
-		private void Update(kcsapi_kdock[] source)
+		internal void Update(kcsapi_kdock[] source)
 		{
 			if (this.Docks.Count == source.Length)
 			{
