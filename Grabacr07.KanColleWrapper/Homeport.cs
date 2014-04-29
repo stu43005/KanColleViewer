@@ -127,7 +127,7 @@ namespace Grabacr07.KanColleWrapper
 			this.Materials = new Materials(proxy);
 			this.Organization = new Organization(this, proxy);
 			this.Repairyard = new Repairyard(this, proxy);
-			this.Dockyard = new Dockyard(this, proxy);
+			this.Dockyard = new Dockyard(proxy);
 			this.Quests = new Quests(proxy);
 			this.Logger = new Logger(proxy);
 			this.GamePage = new GamePage(proxy);

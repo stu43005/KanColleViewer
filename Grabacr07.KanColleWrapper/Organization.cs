@@ -272,7 +272,6 @@ namespace Grabacr07.KanColleWrapper
 			}
 		}
 
-
 		private void DestroyItem(SvData<kcsapi_destroyitem> svdata)
 		{
 			var slotItems = svdata.Request["api_slotitem_ids"]
@@ -281,22 +280,6 @@ namespace Grabacr07.KanColleWrapper
 				.Where(x => this.homeport.SlotItems.ContainsKey(x))
 				.Select(x => this.homeport.SlotItems[x]);
 
-			this.DeleteSlotItems(slotItems);
-		}
-
-		internal void DeleteShips(Ship ship)
-		{
-			this.DeleteShips(new[] { ship });
-		}
-
-		internal void DeleteShips(IEnumerable<Ship> ships)
-		{
-			this.DeleteSlotItems(ships.SelectMany(s => s.SlotItems));
-			this.Ships = new MemberTable<Ship>(this.Ships.Select(kvp => kvp.Value).Except(ships));
-		}
-
-		internal void DeleteSlotItems(IEnumerable<SlotItem> slotItems)
-		{
 			this.homeport.SlotItems = new MemberTable<SlotItem>(this.homeport.SlotItems.Select(kvp => kvp.Value).Except(slotItems));
 		}
 	}
