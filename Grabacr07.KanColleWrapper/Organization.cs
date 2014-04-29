@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Grabacr07.KanColleWrapper.Internal;
@@ -99,9 +98,8 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_req_hensei_change.TryParse().Subscribe(this.Change);
 			proxy.api_req_hokyu_charge.TryParse<kcsapi_charge>().Subscribe(x => this.Charge(x.Data));
 			proxy.api_req_kaisou_powerup.TryParse<kcsapi_powerup>().Subscribe(this.Powerup);
-
-			proxy.api_req_kousyou_getship.TryParse<kcsapi_getship>().Subscribe(x => this.GetShip(x.Data));
-			proxy.api_req_kousyou_destroyship.TryParse<kcsapi_destroyship>().Subscribe(this.DestroyShip);
+			proxy.api_req_kousyou_getship.TryParse<kcsapi_kdock_getship>().Subscribe(x => this.GetShip(x.Data));
+			proxy.api_req_kousyou_destroyship.TryParse<kcsapi_destroyship>().Subscribe(this.DestoryShip);
 			proxy.api_req_kousyou_destroyitem2.TryParse<kcsapi_destroyitem>().Subscribe(this.DestroyItem);
 		}
 
@@ -202,7 +200,7 @@ namespace Grabacr07.KanColleWrapper
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine("編成の変更に失敗しました: {0}", ex);
+				System.Diagnostics.Debug.WriteLine("編成の変更に失敗しました: {0}", ex);
 			}
 		}
 
@@ -224,8 +222,6 @@ namespace Grabacr07.KanColleWrapper
 			}
 
 			if (fleet != null) fleet.UpdateStatus();
-
-			this.homeport.Materials.Update(source.api_material);
 		}
 
 		private void Powerup(SvData<kcsapi_powerup> svd)
@@ -251,28 +247,31 @@ namespace Grabacr07.KanColleWrapper
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine("近代化改修による更新に失敗しました: {0}", ex);
+				System.Diagnostics.Debug.WriteLine("近代化改修による更新に失敗しました: {0}", ex);
 			}
 		}
 
-		private void GetShip(kcsapi_getship source)
+		private void GetShip(kcsapi_kdock_getship source)
 		{
-			this.homeport.Dockyard.Update(source.api_kdock);
-
-			var slotitems = this.homeport.SlotItems.Values;
-			slotitems = slotitems.Concat(source.api_slotitem.Select(s => new SlotItem(s)));
-			this.homeport.SlotItems = new MemberTable<SlotItem>(slotitems);
-
-			var ships = this.Ships.Values.ToList();
-			ships.Add(new Ship(this.homeport, source.api_ship));
-			this.Ships = new MemberTable<Ship>(ships);
+			this.Ships = new MemberTable<Ship>(this.Ships.Select(kvp => kvp.Value).Concat(new[] { new Ship(this.homeport, source.api_ship) }));
 		}
 
-		private void DestroyShip(SvData<kcsapi_destroyship> svdata)
+		private void DestoryShip(SvData<kcsapi_destroyship> svd)
 		{
-			var ship = this.Ships[int.Parse(svdata.Request["api_ship_id"])];
-			this.DeleteShips(ship);
+			try
+			{
+				var ship = this.Ships[int.Parse(svd.Request["api_ship_id"])];
+				if (ship != null)
+				{
+					this.Ships = new MemberTable<Ship>(this.Ships.Select(kvp => kvp.Value).Except(new[] { ship }));
+				}
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("解体による更新に失敗しました: {0}", ex);
+			}
 		}
+
 
 		private void DestroyItem(SvData<kcsapi_destroyitem> svdata)
 		{
