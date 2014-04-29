@@ -159,6 +159,7 @@ namespace Grabacr07.KanColleWrapper.Models
 		{
 			api_id = -1,
 			api_name = "Empty",
+			api_type = new int[4],
 		})
 		{
 			iconType = SlotItemIconType.Empty,
