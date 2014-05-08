@@ -34,7 +34,6 @@ namespace Grabacr07.KanColleWrapper
 		/// </summary>
 		public MasterTable<ShipType> ShipTypes { get; private set; }
 
-		public MasterTable<CompositionQuest> CompositionQuests { get; private set; }
 
 		internal Master(kcsapi_start2 start2)
 		{
@@ -42,8 +41,6 @@ namespace Grabacr07.KanColleWrapper
 			this.Ships = new MasterTable<ShipInfo>(start2.api_mst_ship.Select(x => new ShipInfo(x)));
 			this.SlotItems = new MasterTable<SlotItemInfo>(start2.api_mst_slotitem.Select(x => new SlotItemInfo(x)));
 			this.UseItems = new MasterTable<UseItemInfo>(start2.api_mst_useitem.Select(x => new UseItemInfo(x)));
-
-			this.CompositionQuests = new MasterTable<CompositionQuest>(CompositionQuest.List);
 		}
 	}
 }
