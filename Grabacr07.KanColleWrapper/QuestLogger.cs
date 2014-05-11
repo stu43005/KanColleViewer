@@ -33,6 +33,53 @@ namespace Grabacr07.KanColleWrapper
 		internal QuestLogger(Quests parent, KanColleProxy proxy)
 		{
 			this.quests = parent;
+
+			proxy.api_req_sortie_battleresult.TryParse<kcsapi_battleresult>().Subscribe(x => this.BattleResult(x.Data));
+		}
+
+		private bool HasQuest(int id)
+		{
+			return this.quests.Current.FirstOrDefault(q => q.Id == id) != null;
+		}
+
+		private void BattleResult(kcsapi_battleresult br)
+		{
+			if (this.HasQuest(201)) // 敵艦隊を撃破せよ！
+			{
+				if (br.api_win_rank == "S" || br.api_win_rank == "A" || br.api_win_rank == "B")
+				{
+					this.Log.daily_b1++;
+				}
+			}
+			if (this.HasQuest(216)) // 敵艦隊主力を撃滅せよ！
+			{
+				this.Log.daily_b2++;
+			}
+			if (this.HasQuest(210)) // 敵艦隊を10回邀撃せよ！
+			{
+				this.Log.daily_b3++;
+			}
+			if (this.HasQuest(226)) // 南西諸島海域の制海権を握れ！
+			{
+				string[][] quests = new[] {
+					new[] {"カムラン半島","敵主力艦隊"},
+					new[] {"バシー島沖", "敵通商破壊艦隊"},
+					new[] {"東部オリョール海", "敵主力打撃群"},
+					new[] {"沖ノ島海域", "敵侵攻中核艦隊"},
+				};
+				if (quests.Any(quest => quest[0] == br.api_quest_name && quest[1] == br.api_enemy_info.api_deck_name))
+				{
+					if (br.api_win_rank == "S" || br.api_win_rank == "A" || br.api_win_rank == "B")
+					{
+						this.Log.daily_b7++;
+					}
+				}
+			}
+
+			if (this.HasQuest(214)) // あ号作戦
+			{
+
+			}
 		}
 
 		private QuestLog Load()
