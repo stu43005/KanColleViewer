@@ -21,6 +21,7 @@ namespace Grabacr07.KanColleWrapper
 	public class Quests : NotificationObject
 	{
 		private readonly List<ConcurrentDictionary<int, Quest>> questPages;
+		private QuestLogger Logger;
 
 		#region All 変更通知プロパティ
 
@@ -107,6 +108,7 @@ namespace Grabacr07.KanColleWrapper
 			this.questPages = new List<ConcurrentDictionary<int, Quest>>();
 			this.IsUntaken = true;
 			this.All = this.Current = new List<Quest>();
+			this.Logger = new QuestLogger(this, proxy);
 
 			proxy.api_get_member_questlist
 				.Select(Serialize)

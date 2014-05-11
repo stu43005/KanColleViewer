@@ -98,6 +98,8 @@
     <Compile Include="Dockyard.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="GamePage.cs" />
+    <Compile Include="Models\QuestLog.cs" />
+    <Compile Include="QuestLogger.cs" />
     <Compile Include="Models\Raw\kcsapi_destroyship.cs" />
     <Compile Include="Models\Raw\kcsapi_kdock_getship.cs" />
     <Compile Include="Models\Raw\kcsapi_powerup.cs" />
