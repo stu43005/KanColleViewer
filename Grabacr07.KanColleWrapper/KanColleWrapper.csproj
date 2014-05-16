@@ -120,7 +120,6 @@
     <Compile Include="Models\QuestProgress.cs" />
     <Compile Include="Models\QuestState.cs" />
     <Compile Include="Models\QuestType.cs" />
-    <Compile Include="Models\Raw\kcsapi_destroyitem.cs" />
     <Compile Include="Models\Raw\kcsapi_charge.cs" />
     <Compile Include="Models\Raw\kcsapi_battleresult.cs" />
     <Compile Include="Models\Raw\kcsapi_createitem.cs" />
