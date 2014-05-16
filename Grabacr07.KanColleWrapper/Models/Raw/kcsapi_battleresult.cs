@@ -23,26 +23,28 @@ namespace Grabacr07.KanColleWrapper.Models.Raw
 		public int[] api_lost_flag { get; set; }
 		public string api_quest_name { get; set; }
 		public int api_quest_level { get; set; }
-		public kcsapi_enemyinfo api_enemy_info { get; set; }
+		public kcsapi_battleresult_enemyinfo api_enemy_info { get; set; }
 		public int api_first_clear { get; set; }
 		public int[] api_get_flag { get; set; }
-		public kcsapi_dropship api_get_ship { get; set; }
+		public kcsapi_battleresult_getship api_get_ship { get; set; }
 		public int api_get_eventflag { get; set; }
+		public int api_get_exmap_rate { get; set; }
+		public int api_get_exmap_useitem_id { get; set; }
 	}
 
-	public class kcsapi_dropship
+	public class kcsapi_battleresult_enemyinfo
+	{
+		public string api_level { get; set; }
+		public string api_rank { get; set; }
+		public string api_deck_name { get; set; }
+	}
+
+	public class kcsapi_battleresult_getship
 	{
 		public int api_ship_id { get; set; }
 		public string api_ship_type { get; set; }
 		public string api_ship_name { get; set; }
 		public string api_ship_getmes { get; set; }
-	}
-
-	public class kcsapi_enemyinfo
-	{
-		public string api_level { get; set; }
-		public string api_rank { get; set; }
-		public string api_deck_name { get; set; }
 	}
 	// ReSharper restore InconsistentNaming
 }
