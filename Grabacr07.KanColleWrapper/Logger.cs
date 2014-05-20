@@ -35,10 +35,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().Subscribe(x => this.KDock(x.Data));
 			proxy.api_req_sortie_battleresult.TryParse<kcsapi_battleresult>().Subscribe(x => this.BattleResult(x.Data));
 
-			proxy.api_req_mission_result
-				.Select(MissionResultSerialize)
-				.Where(x => x != null)
-				.Subscribe(this.MissionResult);
+			proxy.api_req_mission_result.TryParse<kcsapi_mission_result>().Subscribe(x => this.MissionResult(x.Data));
 		}
 
 		private void CreateItem(kcsapi_createitem item, NameValueCollection req)
@@ -92,100 +89,38 @@ namespace Grabacr07.KanColleWrapper
 				br.api_get_ship != null ? br.api_get_ship.api_ship_name : "");
 		}
 
-		private static kcsapi_missionresult MissionResultSerialize(Session session)
-		{
-			try
-			{
-				var djson = DynamicJson.Parse(session.GetResponseAsJson());
-
-				int[] api_get_material;
-				if (djson.api_data.api_get_material is double)
-					api_get_material = new int[] { 0, 0, 0, 0 };
-				else
-					api_get_material = djson.api_data.api_get_material;
-
-				var missionresult = new kcsapi_missionresult
-				{
-					api_clear_result = Convert.ToInt32(djson.api_data.api_clear_result),
-					api_quest_name = Convert.ToString(djson.api_data.api_quest_name),
-					api_get_material = api_get_material,
-					api_useitem_flag = djson.api_data.api_useitem_flag.Deserialize<int[]>(),
-				};
-
-				if (djson.api_data.IsDefined("api_get_item1"))
-				{
-					var list = new List<kcsapi_mission_getitem>();
-					var serializer = new DataContractJsonSerializer(typeof(kcsapi_mission_getitem));
-
-					try
-					{
-						list.Add(serializer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(djson.api_data.api_get_item1.ToString()))) as kcsapi_mission_getitem);
-					}
-					catch (SerializationException ex)
-					{
-						Debug.WriteLine(ex.Message);
-					}
-
-					// TODO: is api_get_item2 ?
-					if (djson.api_data.IsDefined("api_get_item2"))
-					{
-						try
-						{
-							list.Add(serializer.ReadObject(new MemoryStream(Encoding.UTF8.GetBytes(djson.api_data.api_get_item2.ToString()))) as kcsapi_mission_getitem);
-						}
-						catch (SerializationException ex)
-						{
-							Debug.WriteLine(ex.Message);
-						}
-					}
-
-					missionresult.api_get_item = list.ToArray();
-				}
-
-				return missionresult;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-				return null;
-			}
-		}
-
-		private void MissionResult(kcsapi_missionresult mission)
+		private void MissionResult(kcsapi_mission_result mission)
 		{
 			int repair = 0, build = 0, develop = 0, coin = 0;
 
-			if (mission.api_get_item != null)
+			if (mission.api_get_item1 != null)
 			{
-				for (int i = 0; i < mission.api_useitem_flag.Length && i < mission.api_get_item.Length; i++)
+				var item = mission.api_get_item1;
+				switch (mission.api_useitem_flag[0])
 				{
-					var item = mission.api_get_item[i];
-					switch (mission.api_useitem_flag[i])
-					{
-						case 1: // 高速修復材
-							repair += item.api_useitem_count;
-							break;
-						case 2: // 高速建造材
-							build += item.api_useitem_count;
-							break;
-						case 3: // 開発資材
-							develop += item.api_useitem_count;
-							break;
-						case 4: // 家具箱
-							switch (item.api_useitem_id)
-							{
-								case 10: // 家具箱（小）200
-									coin += 200 * item.api_useitem_count;
-									break;
-								case 11: // 家具箱（中）400
-									coin += 400 * item.api_useitem_count;
-									break;
-								case 12: // 家具箱（大）700
-									coin += 700 * item.api_useitem_count;
-									break;
-							}
-							break;
-					}
+					case 1: // 高速修復材
+						repair += item.api_useitem_count;
+						break;
+					case 2: // 高速建造材
+						build += item.api_useitem_count;
+						break;
+					case 3: // 開発資材
+						develop += item.api_useitem_count;
+						break;
+					case 4: // 家具箱
+						switch (item.api_useitem_id)
+						{
+							case 10: // 家具箱（小）200
+								coin += 200 * item.api_useitem_count;
+								break;
+							case 11: // 家具箱（中）400
+								coin += 400 * item.api_useitem_count;
+								break;
+							case 12: // 家具箱（大）700
+								coin += 700 * item.api_useitem_count;
+								break;
+						}
+						break;
 				}
 			}
 

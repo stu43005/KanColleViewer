@@ -230,6 +230,14 @@
 										</Grid>
 									</Grid>
 								</StackPanel>
+								<DataTemplate.Triggers>
+									<DataTrigger Binding="{Binding Ship.CanRemodeling}"
+										 Value="True">
+										<Setter TargetName="Level"
+										Property="TextDecorations"
+										Value="Underline"/>
+									</DataTrigger>
+								</DataTemplate.Triggers>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>

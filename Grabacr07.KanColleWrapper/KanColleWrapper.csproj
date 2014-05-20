@@ -125,7 +125,6 @@
     <Compile Include="Models\Raw\kcsapi_charge.cs" />
     <Compile Include="Models\Raw\kcsapi_battleresult.cs" />
     <Compile Include="Models\Raw\kcsapi_createitem.cs" />
-    <Compile Include="Models\Raw\kcsapi_missionresult.cs" />
     <Compile Include="Models\Raw\kcsapi_createship.cs" />
     <Compile Include="Models\Raw\kcsapi_mst_slotitem_equiptype.cs" />
     <Compile Include="Models\Raw\kcsapi_port.cs" />
