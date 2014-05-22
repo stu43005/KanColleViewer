@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Grabacr07.KanColleViewer.Models;
+using Grabacr07.KanColleViewer.Composition;
 using Grabacr07.KanColleWrapper;
 using Livet.EventListeners;
 
@@ -71,7 +70,8 @@ namespace Grabacr07.KanColleViewer.ViewModels.Dev
 		}
 		public void Notify()
 		{
-			WindowsNotification.Notifier.Show(Properties.Resources.Debug_NotificationMessage_Title, Properties.Resources.Debug_NotificationMessage, () => App.ViewModelRoot.Activate());
+			PluginHost.Instance.GetNotifier()
+				.Show(NotifyType.Other, Properties.Resources.Debug_NotificationMessage_Title, Properties.Resources.Debug_NotificationMessage, () => App.ViewModelRoot.Activate());
 		}
 
 	}
