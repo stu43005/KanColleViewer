@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Grabacr07.KanColleViewer.Composition;
 using Grabacr07.KanColleViewer.Properties;
 using Grabacr07.KanColleViewer.Models;
 using Grabacr07.KanColleWrapper;
@@ -52,7 +53,8 @@ namespace Grabacr07.KanColleViewer.ViewModels
 				.ToList();
 			if (Quests.Count > 0)
 			{
-				WindowsNotification.Notifier.Show(
+				PluginHost.Instance.GetNotifier().Show(
+					NotifyType.Other,
 					Resources.Quests,
 					string.Format("以下の任務が未着手です - {0}", Quests[0].Title),
 					() => App.ViewModelRoot.Activate());

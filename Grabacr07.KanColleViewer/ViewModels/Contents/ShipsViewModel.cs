@@ -7,6 +7,7 @@ using Grabacr07.KanColleViewer.Properties;
 using Grabacr07.KanColleWrapper;
 using Livet;
 using Livet.EventListeners;
+using Grabacr07.KanColleViewer.Composition;
 
 namespace Grabacr07.KanColleViewer.ViewModels.Contents
 {
@@ -55,7 +56,7 @@ namespace Grabacr07.KanColleViewer.ViewModels.Contents
 		{
 			if (this.Count >= KanColleClient.Current.Homeport.Admiral.MaxShipCount)
 			{
-				WindowsNotification.Notifier.Show(Resources.Common_ShipGirl, "艦娘持有數達到最大值了。", () => App.ViewModelRoot.Activate());
+				PluginHost.Instance.GetNotifier().Show(NotifyType.Other, Resources.Common_ShipGirl, "艦娘持有數達到最大值了。", () => App.ViewModelRoot.Activate());
 			}
 		}
 	}
