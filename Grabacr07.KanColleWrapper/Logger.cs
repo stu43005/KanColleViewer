@@ -40,12 +40,18 @@ namespace Grabacr07.KanColleWrapper
 
 		private void CreateItem(kcsapi_createitem item, NameValueCollection req)
 		{
+			var slotitem_id = item.api_slotitem_id;
+			if (slotitem_id == 0 && item.api_slot_item != null)
+			{
+				slotitem_id = item.api_slot_item.api_slotitem_id;
+			}
+
 			this.Log("Create_Item_log.csv",
 				"日付,開発装備,種別,燃料,弾薬,鋼材,ボーキ,秘書艦,司令部Lv",
 				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8}",
 				DateTime.Now,
-				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[item.api_slotitem_id].Name : "失敗",
-				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[item.api_slotitem_id].Type : "",
+				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[slotitem_id].Name : "失敗",
+				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[slotitem_id].Type : "",
 				req["api_item1"], req["api_item2"], req["api_item3"], req["api_item4"],
 				KanColleClient.Current.Homeport.Organization.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Organization.Secretary.Info.Name, KanColleClient.Current.Homeport.Organization.Secretary.Level),
 				KanColleClient.Current.Homeport.Admiral.Level);
