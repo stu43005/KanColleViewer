@@ -72,9 +72,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
-    <Reference Include="Windows">
-      <HintPath>C:\Program Files (x86)\Windows Kits\8.0\References\CommonConfiguration\Neutral\Windows.winmd</HintPath>
-    </Reference>
+    <Reference Include="Windows" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
