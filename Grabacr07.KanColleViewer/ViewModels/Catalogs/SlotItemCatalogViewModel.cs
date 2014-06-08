@@ -73,11 +73,10 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 		{
 			this.Title = "所有装備一覧";
 
-			this.CompositeDisposable.Add(new PropertyChangedEventListener(KanColleClient.Current.Homeport)
-			{
-				{ "Ships", (sender, args) => this.Update() },
-				{ "SlotItems", (sender, args) => this.Update() },
-			});
+			//this.CompositeDisposable.Add(new PropertyChangedEventListener(KanColleClient.Current.Homeport.Itemyard)
+			//{
+			//	{ "SlotItems", (sender, args) => this.Update() },
+			//});
 
 			this.Update();
 		}
@@ -85,6 +84,9 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 
 		public async void Update()
 		{
+			if (this.IsReloading)
+				return;
+
 			this.IsReloading = true;
 			this.SlotItems = await UpdateCore();
 			this.IsReloading = false;

@@ -72,8 +72,15 @@
 				BorderBrush="{DynamicResource BorderBrushKey}"
 				Margin="8"
 				Padding="5">
-			<StackPanel>
-				<Grid>
+			<StackPanel Orientation="Horizontal">
+				<Border Margin="0,0,10,0">
+					<metro2:CallMethodButton Content="表示の更新"
+											 Padding="40,6"
+											 MethodName="Update"
+											 HorizontalAlignment="Left" />
+				</Border>
+
+				<Grid VerticalAlignment="Center">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
 						<ColumnDefinition Width="10" />
@@ -94,14 +101,6 @@
 		</Border>
 
 		<DockPanel Grid.Row="2">
-			<!--<Border DockPanel.Dock="Top"
-					Margin="8,0,8,8">
-				<metro2:CallMethodButton Content="表示の更新"
-										 Padding="40,6"
-										 MethodName="Update"
-										 HorizontalAlignment="Left" />
-			</Border>-->
-
 			<Border BorderBrush="{DynamicResource BorderBrushKey}"
 					BorderThickness="1"
 					Margin="8,0,8,8">
