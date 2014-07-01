@@ -36,6 +36,7 @@
 		"/kcsapi/api_req_member/updatedeckname",
 		"/kcsapi/api_req_member/updatecomment",
 		"/kcsapi/api_req_mission/result",
+		"/kcsapi/api_req_mission/return_instruction",
 		"/kcsapi/api_req_sortie/battle",
 		"/kcsapi/api_req_sortie/battleresult",
 	};

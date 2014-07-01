@@ -101,6 +101,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_req_kousyou_getship.TryParse<kcsapi_kdock_getship>().Subscribe(x => this.GetShip(x.Data));
 			proxy.api_req_kousyou_destroyship.TryParse<kcsapi_destroyship>().Subscribe(this.DestoryShip);
 			proxy.api_req_member_updatedeckname.TryParse().Subscribe(this.UpdateFleetName);
+			proxy.api_req_mission_return_instruction.TryParse<kcsapi_mission_return_instruction>().Subscribe(this.MissionReturnInstruction);
 		}
 
 
@@ -300,6 +301,20 @@ namespace Grabacr07.KanColleWrapper
 			catch (Exception ex)
 			{
 				System.Diagnostics.Debug.WriteLine("艦隊名の変更に失敗しました: {0}", ex);
+			}
+		}
+
+
+		private void MissionReturnInstruction(SvData<kcsapi_mission_return_instruction> svd)
+		{
+			try
+			{
+				var fleet = this.Fleets[int.Parse(svd.Request["api_deck_id"])];
+				fleet.Expedition.Update(svd.Data.api_mission);
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("遠征帰還(中止)命令による更新に失敗しました: {0}", ex);
 			}
 		}
 
