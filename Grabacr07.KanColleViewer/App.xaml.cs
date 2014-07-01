@@ -44,10 +44,7 @@ namespace Grabacr07.KanColleViewer
 			Helper.SetRegistryFeatureBrowserEmulation();
 
 			KanColleClient.Current.Proxy.Startup(AppSettings.Default.LocalProxyPort);
-			KanColleClient.Current.Proxy.UseProxyOnConnect = Settings.Current.EnableProxy;
-			KanColleClient.Current.Proxy.UseProxyOnSSLConnect = Settings.Current.EnableSSLProxy;
-			KanColleClient.Current.Proxy.UpstreamProxyHost = Settings.Current.ProxyHost;
-			KanColleClient.Current.Proxy.UpstreamProxyPort = Settings.Current.ProxyPort;
+			KanColleClient.Current.Proxy.UpstreamProxySettings = Settings.Current.ProxySettings;
 
 			ResourceService.Current.ChangeCulture(Settings.Current.Culture);
 			KanColleClient.Current.EnableLogging = Settings.Current.EnableLogging;
