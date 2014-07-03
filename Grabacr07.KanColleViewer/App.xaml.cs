@@ -21,6 +21,7 @@ namespace Grabacr07.KanColleViewer
 	{
 		public static ProductInfo ProductInfo { get; private set; }
 		public static MainWindowViewModel ViewModelRoot { get; private set; }
+		private static System.Threading.Mutex mutex { get; set; }
 
 		static App()
 		{
@@ -42,6 +43,14 @@ namespace Grabacr07.KanColleViewer
 			Settings.Load();
 			PluginHost.Instance.Initialize();
 			Helper.SetRegistryFeatureBrowserEmulation();
+
+			bool isCreated = false;
+			mutex = new System.Threading.Mutex(true, ProductInfo.Title, out isCreated);
+			if (!isCreated)
+			{
+				Application.Current.Shutdown();
+				return;
+			}
 
 			KanColleClient.Current.Proxy.Startup(AppSettings.Default.LocalProxyPort);
 			KanColleClient.Current.Proxy.UpstreamProxySettings = Settings.Current.ProxySettings;
