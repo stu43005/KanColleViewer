@@ -294,6 +294,50 @@ namespace Grabacr07.KanColleViewer.Models
 
 		#endregion
 
+		#region ShipCatalogTopMost 変更通知プロパティ
+
+		private bool _ShipCatalogTopMost;
+
+		/// <summary>
+		/// 所属艦娘一覧 ウィンドウを常に最前面に表示するかどうかを示す値を取得または設定します。
+		/// </summary>
+		public bool ShipCatalogTopMost
+		{
+			get { return this._ShipCatalogTopMost; }
+			set
+			{
+				if (this._ShipCatalogTopMost != value)
+				{
+					this._ShipCatalogTopMost = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region SlotItemCatalogTopMost 変更通知プロパティ
+
+		private bool _SlotItemCatalogTopMost;
+
+		/// <summary>
+		/// 所有装備一覧 ウィンドウを常に最前面に表示するかどうかを示す値を取得または設定します。
+		/// </summary>
+		public bool SlotItemCatalogTopMost
+		{
+			get { return this._SlotItemCatalogTopMost; }
+			set
+			{
+				if (this._SlotItemCatalogTopMost != value)
+				{
+					this._SlotItemCatalogTopMost = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region Culture 変更通知プロパティ
 
 		private string _Culture;

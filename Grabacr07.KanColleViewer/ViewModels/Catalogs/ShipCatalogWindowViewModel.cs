@@ -94,6 +94,23 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 
 		#endregion
 
+		#region TopMost 変更通知プロパティ
+
+		public bool TopMost
+		{
+			get { return Models.Settings.Current.ShipCatalogTopMost; }
+			set
+			{
+				if (Models.Settings.Current.ShipCatalogTopMost != value)
+				{
+					Models.Settings.Current.ShipCatalogTopMost = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 
 		public ShipCatalogWindowViewModel()
 		{

@@ -16,12 +16,14 @@
 				   xmlns:controls="clr-namespace:Grabacr07.KanColleViewer.Views.Controls"
 				   xmlns:contents="clr-namespace:Grabacr07.KanColleViewer.Views.Contents"
 				   xmlns:catalogs="clr-namespace:Grabacr07.KanColleViewer.Views.Catalogs"
+				   xmlns:models="clr-namespace:Grabacr07.KanColleViewer.Models"
 				   x:Name="GlowMetroWindow"
 				   mc:Ignorable="d"
 				   d:DataContext="{d:DesignInstance viewModels:SlotItemCatalogViewModel}"
 				   Title="{Binding Title}"
 				   Width="900"
 				   Height="800"
+				   Topmost="{Binding TopMost}"
 				   FontSize="12"
 				   Background="{DynamicResource ThemeBrushKey}"
 				   Foreground="{DynamicResource ActiveForegroundBrushKey}"
@@ -60,9 +62,16 @@
 						   Margin="2,2,8,2"
 						   Opacity="0.85" />
 
-				<metro:SystemButtons Grid.Column="2"
-									 HorizontalAlignment="Right"
-									 VerticalAlignment="Top" />
+				<StackPanel Grid.Column="2"
+							Orientation="Horizontal"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Top"
+							WindowChrome.IsHitTestVisibleInChrome="True">
+					<metro:CaptionButton IsChecked="{Binding TopMost, Mode=TwoWay}"
+										 ToolTip="{Binding Resources.Settings_Window_TopMost, Source={x:Static models:ResourceService.Current}, Mode=OneWay}"
+										 Style="{DynamicResource PinButtonStyleKey}" />
+					<metro:SystemButtons />
+				</StackPanel>
 			</Grid>
 		</Border>
 		<!-- #endregion -->
