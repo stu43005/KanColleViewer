@@ -140,6 +140,11 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// 施設。
 		/// </summary>
 		Facility = 26,
+
+		/// <summary>
+		/// 照明弾。
+		/// </summary>
+		Flare = 27,
 	}
 
 	public class SlotItemType
