@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="CreateTools.Views.Res"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:vm="clr-namespace:CreateTools.ViewModels"
+             mc:Ignorable="d" 
+			 d:DataContext="{d:DesignInstance vm:ResViewModel}"
+             d:DesignHeight="300"
+			 d:DesignWidth="300">
+	<Border BorderBrush="Black" BorderThickness="1">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="2*" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<Label Content="{Binding Name}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+				<Label Grid.Column="1" Content="{Binding Value}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+			</Grid>
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<Button Content="-">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Sub1"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+				<Label Grid.Column="1" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+				<Button Grid.Column="2" Content="+">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Add1"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+			</Grid>
+			<Grid Grid.Row="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				
+				<Button Content="-">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Sub10"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+				<Label Grid.Column="1" Content="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+				<Button Grid.Column="2" Content="+">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Add10"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+			</Grid>
+			<Grid Grid.Row="3">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<Button Content="-">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Sub100"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+				<Label Grid.Column="1" Content="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+				<Button Grid.Column="2" Content="+">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="Click">
+							<l:LivetCallMethodAction MethodTarget="{Binding}"
+													 MethodName="Add100"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</Button>
+			</Grid>
+		</Grid>
+	</Border>
+</UserControl>
