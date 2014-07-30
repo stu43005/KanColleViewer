@@ -57,7 +57,6 @@ namespace Grabacr07.KanColleViewer
 			KanColleClient.Current.Proxy.UpstreamProxySettings = Settings.Current.ProxySettings;
 
 			ResourceService.Current.ChangeCulture(Settings.Current.Culture);
-			KanColleClient.Current.EnableLogging = Settings.Current.EnableLogging;
 
 			ThemeService.Current.Initialize(this, Theme.Dark, Accent.Purple);
 

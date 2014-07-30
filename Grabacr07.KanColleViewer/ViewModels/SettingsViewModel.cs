@@ -248,7 +248,6 @@ namespace Grabacr07.KanColleViewer.ViewModels
 				if (Settings.Current.KanColleClientSettings.EnableLogging != value)
 				{
 					Settings.Current.KanColleClientSettings.EnableLogging = value;
-					KanColleClient.Current.EnableLogging = value;
 					this.RaisePropertyChanged();
 				}
 			}

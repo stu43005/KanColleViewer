@@ -20,16 +20,12 @@ namespace Grabacr07.KanColleWrapper
 {
 	public class Logger : NotificationObject
 	{
-		public bool EnableLogging { get; set; }
-
 		private bool waitingForShip;
 		private int dockid;
 		private NameValueCollection createShipRequest;
 
 		internal Logger(KanColleProxy proxy)
 		{
-			this.EnableLogging = KanColleClient.Current.EnableLogging;
-
 			proxy.api_req_kousyou_createitem.TryParse<kcsapi_createitem>().Subscribe(x => this.CreateItem(x.Data, x.Request));
 			proxy.api_req_kousyou_createship.TryParse<kcsapi_createship>().Subscribe(x => this.CreateShip(x.Request));
 			proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().Subscribe(x => this.KDock(x.Data));
@@ -142,7 +138,7 @@ namespace Grabacr07.KanColleWrapper
 
 		private void Log(string filename, string header, string format, params object[] args)
 		{
-			if (!this.EnableLogging) return;
+			if (!KanColleClient.Current.Settings.EnableLogging) return;
 
 			const string path = @".\logs\";
 			string file = Path.Combine(path, filename);

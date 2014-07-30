@@ -102,25 +102,6 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
-		#region EnableLogging
-
-		private bool _EnableLogging;
-
-		public bool EnableLogging
-		{
-			get { return this._EnableLogging; }
-			set
-			{
-				if (this._EnableLogging != value)
-				{
-					this._EnableLogging = value;
-					if (this.Homeport != null) this.Homeport.Logger.EnableLogging = this._EnableLogging;
-				}
-			}
-		}
-
-		#endregion
-
 
 		private KanColleClient()
 		{
