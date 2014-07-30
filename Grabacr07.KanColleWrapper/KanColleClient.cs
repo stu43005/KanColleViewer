@@ -24,7 +24,6 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
-
 		/// <summary>
 		/// 艦これの通信をフックするプロキシを取得します。
 		/// </summary>
@@ -39,7 +38,6 @@ namespace Grabacr07.KanColleWrapper
 		/// 母港の情報を取得します。
 		/// </summary>
 		public Homeport Homeport { get; private set; }
-
 
 		#region IsStarted 変更通知プロパティ
 
@@ -56,6 +54,47 @@ namespace Grabacr07.KanColleWrapper
 				if (this._IsStarted != value)
 				{
 					this._IsStarted = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region IsInSortie 変更通知プロパティ
+
+		private bool _IsInSortie;
+
+		/// <summary>
+		/// 艦隊が出撃中かどうかを示す値を取得します。
+		/// </summary>
+		public bool IsInSortie
+		{
+			get { return this._IsInSortie; }
+			private set
+			{
+				if (this._IsInSortie != value)
+				{
+					this._IsInSortie = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
+		#region Settings 変更通知プロパティ
+
+		private KanColleClientSettings _Settings;
+
+		public KanColleClientSettings Settings
+		{
+			get { return this._Settings ?? (this._Settings = new KanColleClientSettings()); }
+			set
+			{
+				if (this._Settings != value)
+				{
+					this._Settings = value;
 					this.RaisePropertyChanged();
 				}
 			}
@@ -85,7 +124,23 @@ namespace Grabacr07.KanColleWrapper
 
 		private KanColleClient()
 		{
-			var proxy = new KanColleProxy();
+			this.Initialieze();
+
+			var start = this.Proxy.api_req_map_start;
+			var end = this.Proxy.api_port;
+
+			this.Proxy.ApiSessionSource
+				.SkipUntil(start.Do(_ => this.IsInSortie = true))
+				.TakeUntil(end)
+				.Finally(() => this.IsInSortie = false)
+				.Repeat()
+				.Subscribe();
+		}
+
+
+		public void Initialieze()
+		{
+			var proxy = this.Proxy ?? (this.Proxy = new KanColleProxy());
 			var basic = proxy.api_get_member_basic.TryParse<kcsapi_basic>().FirstAsync().ToTask();
 			var kdock = proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().FirstAsync().ToTask();
 			var sitem = proxy.api_get_member_slot_item.TryParse<kcsapi_slotitem[]>().FirstAsync().ToTask();
@@ -104,7 +159,7 @@ namespace Grabacr07.KanColleWrapper
 				if (!SvData.TryParse(session, out svd)) return;
 
 				this.Master = new Master(svd.Data);
-				this.Homeport = new Homeport(proxy);
+				if (this.Homeport == null) this.Homeport = new Homeport(proxy);
 
 				if (canInitialize)
 				{
@@ -115,8 +170,6 @@ namespace Grabacr07.KanColleWrapper
 
 				this.IsStarted = true;
 			});
-
-			this.Proxy = proxy;
 		}
 	}
 }
