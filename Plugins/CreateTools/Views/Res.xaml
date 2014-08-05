@@ -10,7 +10,8 @@
 			 d:DataContext="{d:DesignInstance vm:ResViewModel}"
              d:DesignHeight="300"
 			 d:DesignWidth="300">
-	<Border BorderBrush="Black" BorderThickness="1">
+	<Border BorderBrush="{DynamicResource BorderBrushKey}"
+			BorderThickness="1">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition />
@@ -25,9 +26,16 @@
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 
-				<Label Content="{Binding Name}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-				<Label Grid.Column="1" Content="{Binding Value}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+				<TextBlock Text="{Binding Name}"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" />
+
+				<TextBlock Grid.Column="1"
+						   Text="{Binding Value}"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" />
 			</Grid>
+
 			<Grid Grid.Row="1">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
@@ -43,8 +51,14 @@
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
-				<Label Grid.Column="1" Content="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-				<Button Grid.Column="2" Content="+">
+
+				<TextBlock Grid.Column="1"
+						   Text="1"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" />
+
+				<Button Grid.Column="2"
+						Content="+">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
 							<l:LivetCallMethodAction MethodTarget="{Binding}"
@@ -53,13 +67,14 @@
 					</i:Interaction.Triggers>
 				</Button>
 			</Grid>
+
 			<Grid Grid.Row="2">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
 					<ColumnDefinition />
 					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
-				
+
 				<Button Content="-">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
@@ -68,8 +83,14 @@
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
-				<Label Grid.Column="1" Content="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-				<Button Grid.Column="2" Content="+">
+
+				<TextBlock Grid.Column="1"
+						   Text="10"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" />
+
+				<Button Grid.Column="2"
+						Content="+">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
 							<l:LivetCallMethodAction MethodTarget="{Binding}"
@@ -78,6 +99,7 @@
 					</i:Interaction.Triggers>
 				</Button>
 			</Grid>
+
 			<Grid Grid.Row="3">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
@@ -93,8 +115,14 @@
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</Button>
-				<Label Grid.Column="1" Content="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-				<Button Grid.Column="2" Content="+">
+
+				<TextBlock Grid.Column="1"
+						   Text="100"
+						   HorizontalAlignment="Center"
+						   VerticalAlignment="Center" />
+
+				<Button Grid.Column="2"
+						Content="+">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="Click">
 							<l:LivetCallMethodAction MethodTarget="{Binding}"
