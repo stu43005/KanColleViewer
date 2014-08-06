@@ -34,6 +34,28 @@ namespace Grabacr07.KanColleWrapper.Models
 
 		#endregion
 
+		#region Mission 変更通知プロパティ
+
+		private Mission _Mission;
+
+		/// <summary>
+		/// 実行中の遠征任務を取得します。
+		/// </summary>
+		public Mission Mission
+		{
+			get { return this._Mission; }
+			private set
+			{
+				if (this._Mission != value)
+				{
+					this._Mission = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 		#region ReturnTime / IsInExecution 変更通知プロパティ
 
 		private DateTimeOffset? _ReturnTime;
@@ -99,12 +121,15 @@ namespace Grabacr07.KanColleWrapper.Models
 		{
 			if (rawData.Length != 4 || rawData.All(x => x == 0))
 			{
+				this.Id = -1;
+				this.Mission = null;
 				this.ReturnTime = null;
 				this.Remaining = null;
 			}
 			else
 			{
 				this.Id = (int)rawData[1];
+				this.Mission = KanColleClient.Current.Master.Missions[this.Id];
 				this.ReturnTime = Definitions.UnixEpoch.AddMilliseconds(rawData[2]);
 				this.UpdateCore();
 			}
@@ -114,12 +139,14 @@ namespace Grabacr07.KanColleWrapper.Models
 		{
 			if (this.ReturnTime.HasValue)
 			{
-				var remaining = this.ReturnTime.Value - TimeSpan.FromSeconds(KanColleClient.Current.Settings.NotificationShorteningTime) - DateTimeOffset.Now;
+				var remaining = this.ReturnTime.Value - DateTimeOffset.Now;
 				if (remaining.Ticks < 0) remaining = TimeSpan.Zero;
 
 				this.Remaining = remaining;
 
-				if (!this.notificated && this.Returned != null && remaining.Ticks <= 0)
+				if (!this.notificated
+					&& this.Returned != null
+					&& remaining <= TimeSpan.FromSeconds(KanColleClient.Current.Settings.NotificationShorteningTime))
 				{
 					this.Returned(this, new ExpeditionReturnedEventArgs(this.fleet.Name));
 					this.notificated = true;
