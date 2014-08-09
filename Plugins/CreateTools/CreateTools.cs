@@ -13,6 +13,10 @@ using CreateTools.Views;
 namespace CreateTools
 {
 	[Export(typeof(IToolPlugin))]
+	[ExportMetadata("Title", "CreateTools")]
+	[ExportMetadata("Description", "開發補助工具")]
+	[ExportMetadata("Version", "1.0")]
+	[ExportMetadata("Author", "@stu43005")]
 	public class CreateTools : IToolPlugin
     {
 		public string ToolName
