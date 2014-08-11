@@ -30,6 +30,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_req_kousyou_createship.TryParse<kcsapi_createship>().Subscribe(x => this.CreateShip(x.Request));
 			proxy.api_get_member_kdock.TryParse<kcsapi_kdock[]>().Subscribe(x => this.KDock(x.Data));
 			proxy.api_req_sortie_battleresult.TryParse<kcsapi_battleresult>().Subscribe(x => this.BattleResult(x.Data));
+			proxy.api_req_combined_battle_battleresult.TryParse<kcsapi_combined_battle_battleresult>().Subscribe(x => this.BattleResult(x.Data));
 
 			proxy.api_req_mission_result.TryParse<kcsapi_mission_result>().Subscribe(x => this.MissionResult(x.Data));
 		}
@@ -80,6 +81,18 @@ namespace Grabacr07.KanColleWrapper
 		}
 
 		private void BattleResult(kcsapi_battleresult br)
+		{
+			this.Log("Battle_log.csv",
+				"日付,海域,ランク,敵艦隊,ドロップ艦種,ドロップ艦娘",
+				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5}",
+				DateTime.Now,
+				br.api_quest_name, br.api_win_rank,
+				br.api_enemy_info != null ? br.api_enemy_info.api_deck_name : "",
+				br.api_get_ship != null ? br.api_get_ship.api_ship_type : "",
+				br.api_get_ship != null ? br.api_get_ship.api_ship_name : "");
+		}
+
+		private void BattleResult(kcsapi_combined_battle_battleresult br)
 		{
 			this.Log("Battle_log.csv",
 				"日付,海域,ランク,敵艦隊,ドロップ艦種,ドロップ艦娘",
