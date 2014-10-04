@@ -150,6 +150,9 @@
 						<vContents:QuestViewSource x:Key="WeeklyQuestSourceKey"
 												   Source="{Binding Quests}"
 												   Type="Weekly" />
+						<vContents:QuestViewSource x:Key="MonthlyQuestSourceKey"
+												   Source="{Binding Quests}"
+												   Type="Monthly" />
 					</TabControl.Resources>
 
 					<TabItem>
@@ -170,6 +173,16 @@
 									   Margin="10,0,10,10" />
 						</TabItem.Header>
 						<ItemsControl ItemsSource="{Binding Source={StaticResource WeeklyQuestSourceKey}}" />
+					</TabItem>
+
+					<TabItem>
+						<TabItem.Header>
+							<TextBlock Text="每月任務"
+									   Style="{DynamicResource HeaderTextStyleKey}"
+									   Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}}, Path=Foreground}"
+									   Margin="10,0,10,10" />
+						</TabItem.Header>
+						<ItemsControl ItemsSource="{Binding Source={StaticResource MonthlyQuestSourceKey}}" />
 					</TabItem>
 				</TabControl>
 

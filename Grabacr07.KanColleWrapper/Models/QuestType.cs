@@ -25,5 +25,10 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// ウィークリー任務。
 		/// </summary>
 		Weekly = 3,
+
+		/// <summary>
+		/// マンスリー任務。
+		/// </summary>
+		Monthly = 6,
 	}
 }
