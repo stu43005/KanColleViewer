@@ -17,32 +17,20 @@ namespace Grabacr07.KanColleWrapper.Models
 		private SlotItemIconType? iconType;
 		private int? categoryId;
 
-		public int Id
-		{
-			get { return this.RawData.api_id; }
-		}
+		public int Id => this.RawData.api_id;
 
-		public string Name
-		{
-			get { return this.RawData.api_name; }
-		}
+	    public string Name => this.RawData.api_name;
 
 		public string Type
 		{
 			get { return SlotItemType.ItemType[this.IconType]; }
 		}
 
-		public SlotItemIconType IconType
-		{
-			get { return this.iconType ?? (SlotItemIconType)(this.iconType = (SlotItemIconType)(this.RawData.api_type.Get(3) ?? 0)); }
-		}
+		public SlotItemIconType IconType => this.iconType ?? (SlotItemIconType)(this.iconType = (SlotItemIconType)(this.RawData.api_type.Get(3) ?? 0));
 
-		public int CategoryId
-		{
-			get { return this.categoryId ?? (int)(this.categoryId = this.RawData.api_type.Get(2) ?? int.MaxValue); }
-		}
+	    public int CategoryId => this.categoryId ?? (int)(this.categoryId = this.RawData.api_type.Get(2) ?? int.MaxValue);
 
-		/// <summary>
+	    /// <summary>
 		/// 火力値を取得します。
 		/// </summary>
 		public int Firepower
@@ -69,12 +57,9 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// <summary>
 		/// 対空値を取得します。
 		/// </summary>
-		public int AA
-		{
-			get { return this.RawData.api_tyku; }
-		}
+		public int AA => this.RawData.api_tyku;
 
-		/// <summary>
+	    /// <summary>
 		/// 対潜値を取得します。
 		/// </summary>
 		public int AS
@@ -150,10 +135,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			api_name = "？？？",
 		});
 
-		public static SlotItemInfo Dummy
-		{
-			get { return dummy; }
-		}
+		public static SlotItemInfo Dummy => dummy;
 
 		private static readonly SlotItemInfo empty = new SlotItemInfo(new kcsapi_mst_slotitem()
 		{

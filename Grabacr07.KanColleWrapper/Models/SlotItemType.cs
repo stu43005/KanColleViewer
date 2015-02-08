@@ -155,7 +155,17 @@ namespace Grabacr07.KanColleWrapper.Models
 		/// 航空要員。
 		/// </summary>
 		MaintenancePersonnel = 29,
-	}
+
+        /// <summary>
+        /// 高射砲。
+        /// </summary>
+        AntiAircraftFireDirector = 30,
+
+        /// <summary>
+        /// ロケットランチャー。
+        /// </summary>
+        RocketLauncher = 31,
+    }
 
 	public class SlotItemType
 	{
