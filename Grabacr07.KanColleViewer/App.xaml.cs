@@ -44,6 +44,7 @@ namespace Grabacr07.KanColleViewer
 			PluginHost.Instance.Initialize();
 			NotifierHost.Instance.Initialize(KanColleClient.Current);
 			Helper.SetRegistryFeatureBrowserEmulation();
+			Helper.SetMMCSSTask();
 
 			bool isCreated = false;
 			mutex = new System.Threading.Mutex(true, ProductInfo.Title, out isCreated);

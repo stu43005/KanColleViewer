@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Grabacr07.KanColleViewer.Models.Data.Xml;
 using Grabacr07.KanColleWrapper;
+using Grabacr07.KanColleWrapper.Models;
 using Livet;
 
 namespace Grabacr07.KanColleViewer.Models
@@ -412,7 +413,7 @@ namespace Grabacr07.KanColleViewer.Models
 		}
 
 		#endregion
-		
+
 
 		public void Save()
 		{

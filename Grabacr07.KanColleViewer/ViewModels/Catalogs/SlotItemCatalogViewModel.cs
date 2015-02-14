@@ -125,7 +125,7 @@ namespace Grabacr07.KanColleViewer.ViewModels.Catalogs
 
 				foreach (var ship in ships.Values)
 				{
-					foreach (var target in ship.SlotItems.Select(item => dic.ContainsKey(item.Info.Id) ? dic[item.Info.Id] : null).Where(x => x != null))
+					foreach (var target in ship.EquippedSlots.Select(item => dic.ContainsKey(item.Item.Info.Id) ? dic[item.Item.Info.Id] : null).Where(x => x != null))
 					{
 						target.AddShip(ship);
 					}

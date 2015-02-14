@@ -48,7 +48,7 @@ namespace Grabacr07.KanColleWrapper
 				@"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8}",
 				DateTime.Now,
 				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[slotitem_id].Name : "失敗",
-				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[slotitem_id].Type : "",
+				item.api_create_flag == 1 ? KanColleClient.Current.Master.SlotItems[slotitem_id].IconTypeName : "",
 				req["api_item1"], req["api_item2"], req["api_item3"], req["api_item4"],
 				KanColleClient.Current.Homeport.Organization.Secretary == null ? "" : string.Format("{0}(Lv{1})", KanColleClient.Current.Homeport.Organization.Secretary.Info.Name, KanColleClient.Current.Homeport.Organization.Secretary.Level),
 				KanColleClient.Current.Homeport.Admiral.Level);
