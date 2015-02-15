@@ -16,6 +16,9 @@ namespace Grabacr07.KanColleWrapper
 	{
 		private readonly Homeport homeport;
 
+		private readonly List<int> evacuatedShipsIds = new List<int>();
+		private readonly List<int> towShipIds = new List<int>();
+
 		#region Ships 変更通知プロパティ
 
 		private MemberTable<Ship> _Ships;
@@ -94,7 +97,7 @@ namespace Grabacr07.KanColleWrapper
 			}
 		}
 
-		
+
 		public Organization(Homeport parent, KanColleProxy proxy)
 		{
 			this.homeport = parent;
@@ -128,12 +131,7 @@ namespace Grabacr07.KanColleWrapper
 			proxy.api_req_hensei_combined.TryParse<kcsapi_hensei_combined>()
 				.Subscribe(x => this.Combined = x.Data.api_combined != 0);
 
-			proxy.ApiSessionSource
-				.SkipUntil(proxy.api_req_map_start.TryParse().Do(this.Sortie))
-				.TakeUntil(proxy.api_port)
-				.Finally(this.Homing)
-				.Repeat()
-				.Subscribe();
+			this.SubscribeSortieSessions(proxy);
 		}
 
 
@@ -145,6 +143,30 @@ namespace Grabacr07.KanColleWrapper
 			return this.Fleets.Select(x => x.Value).SingleOrDefault(x => x.Ships.Any(s => s.Id == shipId));
 		}
 
+		private void UpdateFleetName(SvData data)
+		{
+			if (data == null || !data.IsSuccess) return;
+
+			try
+			{
+				var fleet = this.Fleets[int.Parse(data.Request["api_deck_id"])];
+				var name = data.Request["api_name"];
+
+				fleet.Name = name;
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("艦隊名の変更に失敗しました: {0}", ex);
+			}
+		}
+
+		private void RaiseShipsChanged()
+		{
+			this.RaisePropertyChanged("Ships");
+		}
+
+
+		#region 母港 / 艦隊編成 (Update / Chaneg)
 
 		/// <summary>
 		/// 指定した <see cref="kcsapi_ship2"/> 型の配列を使用して、<see cref="Ships"/> プロパティ値を更新します。
@@ -167,6 +189,12 @@ namespace Grabacr07.KanColleWrapper
 			else
 			{
 				this.Ships = new MemberTable<Ship>(source.Select(x => new Ship(this.homeport, x)));
+
+				if (KanColleClient.Current.IsInSortie)
+				{
+					foreach (var id in this.evacuatedShipsIds) this.Ships[id].Status |= ShipStatus.Evacuation;
+					foreach (var id in this.towShipIds) this.Ships[id].Status |= ShipStatus.Tow;
+				}
 			}
 		}
 
@@ -237,6 +265,10 @@ namespace Grabacr07.KanColleWrapper
 			}
 		}
 
+		#endregion
+
+		#region 補給 / 近代化改修 (Charge / Powerup)
+
 		private void Charge(kcsapi_charge source)
 		{
 			Fleet fleet = null;	// 補給した艦が所属している艦隊。艦隊をまたいで補給はできないので、必ず 1 つに絞れる
@@ -291,6 +323,10 @@ namespace Grabacr07.KanColleWrapper
 			}
 		}
 
+		#endregion
+
+		#region 工廠 (Get / Destroy)
+
 		private void GetShip(kcsapi_kdock_getship source)
 		{
 			this.homeport.Itemyard.AddFromDock(source);
@@ -318,42 +354,50 @@ namespace Grabacr07.KanColleWrapper
 			}
 		}
 
+		#endregion
 
-		private void UpdateFleetName(SvData data)
+		#region 出撃 (Sortie / Homing / Escape)
+
+		private void SubscribeSortieSessions(KanColleProxy proxy)
 		{
-			if (data == null || !data.IsSuccess) return;
+			proxy.ApiSessionSource
+				.SkipUntil(proxy.api_req_map_start.TryParse().Do(this.Sortie))
+				.TakeUntil(proxy.api_port)
+				.Finally(this.Homing)
+				.Repeat()
+				.Subscribe();
 
-			try
-			{
-				var fleet = this.Fleets[int.Parse(data.Request["api_deck_id"])];
-				var name = data.Request["api_name"];
+			int[] evacuationOfferedShipIds = null;
+			int[] towOfferedShipIds = null;
 
-				fleet.Name = name;
-			}
-			catch (Exception ex)
-			{
-				System.Diagnostics.Debug.WriteLine("艦隊名の変更に失敗しました: {0}", ex);
-			}
-		}
-
-
-		private void MissionReturnInstruction(SvData<kcsapi_mission_return_instruction> svd)
-		{
-			try
-			{
-				var fleet = this.Fleets[int.Parse(svd.Request["api_deck_id"])];
-				fleet.Expedition.Update(svd.Data.api_mission);
-			}
-			catch (Exception ex)
-			{
-				System.Diagnostics.Debug.WriteLine("遠征帰還(中止)命令による更新に失敗しました: {0}", ex);
-			}
-		}
-
-
-		private void RaiseShipsChanged()
-		{
-			this.RaisePropertyChanged("Ships");
+			proxy.api_req_combined_battle_battleresult
+				.TryParse<kcsapi_combined_battle_battleresult>()
+				.Where(x => x.Data.api_escape != null)
+				.Select(x => x.Data.api_escape)
+				.Subscribe(x =>
+				{
+					evacuationOfferedShipIds = x.api_escape_idx;
+					towOfferedShipIds = x.api_tow_idx;
+				});
+			proxy.api_req_combined_battle_goback_port
+				.Subscribe(_ =>
+				{
+					if (KanColleClient.Current.IsInSortie
+						&& evacuationOfferedShipIds != null
+						&& evacuationOfferedShipIds.Length >= 1
+						&& towOfferedShipIds != null
+						&& towOfferedShipIds.Length >= 1)
+					{
+						this.evacuatedShipsIds.Add(evacuationOfferedShipIds[0]);
+						this.towShipIds.Add(towOfferedShipIds[0]);
+					}
+				});
+			proxy.api_get_member_ship2
+				.Subscribe(_ =>
+				{
+					evacuationOfferedShipIds = null;
+					towOfferedShipIds = null;
+				});
 		}
 
 
@@ -380,6 +424,24 @@ namespace Grabacr07.KanColleWrapper
 			foreach (var target in this.Fleets.Values)
 			{
 				target.Homing();
+			}
+
+			this.evacuatedShipsIds.Clear();
+			this.towShipIds.Clear();
+		}
+
+		#endregion
+
+		private void MissionReturnInstruction(SvData<kcsapi_mission_return_instruction> svd)
+		{
+			try
+			{
+				var fleet = this.Fleets[int.Parse(svd.Request["api_deck_id"])];
+				fleet.Expedition.Update(svd.Data.api_mission);
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine("遠征帰還(中止)命令による更新に失敗しました: {0}", ex);
 			}
 		}
 	}
