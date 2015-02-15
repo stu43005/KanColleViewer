@@ -321,7 +321,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			}
 
 			this.Slots = this.RawData.api_slot
-				.Select(id => this.homeport.Itemyard.SlotItems[id])
+				.Select((id, i) => this.homeport.Itemyard.SlotItems[id] ?? (i < this.RawData.api_slotnum ? SlotItem.Empty : null))
 				.Select((t, i) => new ShipSlot(t, this.Info.RawData.api_maxeq.Get(i) ?? 0, this.RawData.api_onslot.Get(i) ?? 0))
 				.ToArray();
 			this.EquippedSlots = this.Slots.Where(x => x.Equipped).ToArray();
