@@ -164,10 +164,9 @@
 											</Style>
 										</StackPanel.Resources>
 
-										<Grid HorizontalAlignment="Left">
+										<Grid>
 											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="Auto"
-																  SharedSizeGroup="Name" />
+												<ColumnDefinition />
 												<ColumnDefinition Width="Auto"
 																  SharedSizeGroup="Level" />
 												<ColumnDefinition Width="Auto"
