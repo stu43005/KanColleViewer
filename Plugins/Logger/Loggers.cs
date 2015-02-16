@@ -345,4 +345,74 @@ namespace Logger
 				repair, build, develop, coin);
 		}
 	}
+
+	public class MaterialsLogger : LoggerBase
+	{
+		public override string Title
+		{
+			get { return "Materials"; }
+		}
+
+		public override string Description
+		{
+			get { return "資材開支紀錄"; }
+		}
+
+		public override string FileName
+		{
+			get { return "Materials_log.csv"; }
+		}
+
+		public override string Header
+		{
+			get { return "日付,燃料,弾薬,鋼材,ボーキ,高速建造材,高速修復材,開発資材,改修資材"; }
+		}
+
+		public override string Format
+		{
+			get { return @"{0:yyyy-MM-dd HH\:mm\:ss},{1},{2},{3},{4},{5},{6},{7},{8}"; }
+		}
+
+		public override bool Enabled
+		{
+			get { return LoggerSettings.Current.EnableCreateItemLogging; }
+			set
+			{
+				LoggerSettings.Current.EnableCreateItemLogging = value;
+				LoggerSettings.Current.Save();
+			}
+		}
+
+		public MaterialsLogger(KanColleProxy proxy)
+		{
+			//proxy.api_port.TryParse<kcsapi_port>().Subscribe(x => this.MaterialsHistory(x.Data.api_material));
+			proxy.api_get_member_material.TryParse<kcsapi_material[]>().Subscribe(x => this.MaterialsHistory(x.Data));
+			proxy.api_req_hokyu_charge.TryParse<kcsapi_charge>().Subscribe(x => this.MaterialsHistory(x.Data.api_material));
+			proxy.api_req_kousyou_destroyship.TryParse<kcsapi_destroyship>().Subscribe(x => this.MaterialsHistory(x.Data.api_material));
+		}
+
+		private void MaterialsHistory(kcsapi_material[] source)
+		{
+			if (source != null && source.Length >= 7)
+			{
+				this.Log(DateTime.Now,
+					source[0].api_value, source[1].api_value, source[2].api_value, source[3].api_value,
+					source[4].api_value, source[5].api_value, source[6].api_value,
+					source.Length > 7 ? source[7].api_value : KanColleClient.Current.Homeport.Materials.RevampingMaterials);
+			}
+		}
+
+		private void MaterialsHistory(int[] source)
+		{
+			if (source != null && source.Length == 4)
+			{
+				this.Log(DateTime.Now,
+					source[0], source[1], source[2], source[3],
+					KanColleClient.Current.Homeport.Materials.InstantBuildMaterials,
+					KanColleClient.Current.Homeport.Materials.InstantRepairMaterials,
+					KanColleClient.Current.Homeport.Materials.DevelopmentMaterials,
+					KanColleClient.Current.Homeport.Materials.RevampingMaterials);
+			}
+		}
+	}
 }

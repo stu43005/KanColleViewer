@@ -176,6 +176,28 @@ namespace Grabacr07.KanColleWrapper
 
 		#endregion
 
+		#region RevampingMaterials 変更通知プロパティ
+
+		private int _RevampingMaterials;
+
+		/// <summary>
+		/// 所有している改修資材の数を取得します。
+		/// </summary>
+		public int RevampingMaterials
+		{
+			get { return this._RevampingMaterials; }
+			private set
+			{
+				if (this._RevampingMaterials != value)
+				{
+					this._RevampingMaterials = value;
+					this.RaisePropertyChanged();
+				}
+			}
+		}
+
+		#endregion
+
 
 		internal Materials(KanColleProxy proxy)
 		{
@@ -196,6 +218,10 @@ namespace Grabacr07.KanColleWrapper
 				this.DevelopmentMaterials = source[6].api_value;
 				this.InstantRepairMaterials = source[5].api_value;
 				this.InstantBuildMaterials = source[4].api_value;
+				if (source.Length > 7)
+				{
+					this.RevampingMaterials = source[7].api_value;
+				}
 			}
 		}
 

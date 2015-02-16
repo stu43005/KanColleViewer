@@ -25,6 +25,7 @@ namespace Logger
 				new CreateShipLogger(KanColleClient.Current.Proxy),
 				new BattleLogger(KanColleClient.Current.Proxy),
 				new MissionLogger(KanColleClient.Current.Proxy),
+				new MaterialsLogger(KanColleClient.Current.Proxy),
 			}
 		};
 
