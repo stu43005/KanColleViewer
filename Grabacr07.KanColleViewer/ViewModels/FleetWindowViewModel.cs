@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Grabacr07.KanColleViewer.Models;
+using Grabacr07.KanColleViewer.Properties;
+using Grabacr07.KanColleViewer.ViewModels.Contents;
+using Grabacr07.KanColleViewer.ViewModels.Contents.Fleets;
 using Grabacr07.KanColleWrapper;
-using Livet;
 using Livet.EventListeners;
 
-namespace Grabacr07.KanColleViewer.ViewModels.Contents.Fleets
+namespace Grabacr07.KanColleViewer.ViewModels
 {
-	public class FleetsViewModel : TabItemViewModel
+	public class FleetWindowViewModel : WindowViewModel
 	{
-		public override string Name
+		public Organization Organization
 		{
-			get { return Properties.Resources.Fleets; }
-			protected set { throw new NotImplementedException(); }
+			get { return KanColleClient.Current.Homeport.Organization; }
 		}
 
 		#region Fleets 変更通知プロパティ
@@ -60,28 +63,8 @@ namespace Grabacr07.KanColleViewer.ViewModels.Contents.Fleets
 
 		#endregion
 
-		#region IsNotifyReturned 変更通知プロパティ
 
-		/// <summary>
-		/// 遠征帰投時にトースト通知を表示するかどうかを示す値を取得します。
-		/// </summary>
-		public bool IsNotifyReturned
-		{
-			get { return Settings.Current.NotifyExpeditionReturned; }
-			set
-			{
-				if (Settings.Current.NotifyExpeditionReturned != value)
-				{
-					Settings.Current.NotifyExpeditionReturned = value;
-					this.RaisePropertyChanged();
-				}
-			}
-		}
-
-		#endregion
-
-
-		public FleetsViewModel()
+		public FleetWindowViewModel()
 		{
 			this.CompositeDisposable.Add(new PropertyChangedEventListener(KanColleClient.Current.Homeport.Organization)
 			{

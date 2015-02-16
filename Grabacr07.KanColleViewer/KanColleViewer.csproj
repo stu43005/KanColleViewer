@@ -152,6 +152,7 @@
     <Compile Include="ViewModels\Catalogs\SlotItemViewModel.cs" />
     <Compile Include="ViewModels\Catalogs\SortableColumnViewModel.cs" />
     <Compile Include="ViewModels\Catalogs\ShipCatalogSortWorker.cs" />
+    <Compile Include="ViewModels\Contents\Fleets\CombinedFleetViewModel.cs" />
     <Compile Include="ViewModels\Composition\NotifierViewModel.cs" />
     <Compile Include="ViewModels\Composition\PluginViewModel.cs" />
     <Compile Include="ViewModels\Composition\PluginViewModelBase.cs" />
@@ -159,6 +160,8 @@
     <Compile Include="ViewModels\Contents\AdmiralViewModel.cs" />
     <Compile Include="ViewModels\Contents\BuildingDockViewModel.cs" />
     <Compile Include="ViewModels\Contents\CreatedSlotItemViewModel.cs" />
+    <Compile Include="ViewModels\Contents\Fleets\FleetStateViewModel.cs" />
+    <Compile Include="ViewModels\Contents\Fleets\QuickStateViewViewModel.cs" />
     <Compile Include="ViewModels\Contents\RepairingDockViewModel.cs" />
     <Compile Include="ViewModels\Contents\ExpeditionsViewModel.cs" />
     <Compile Include="ViewModels\Contents\Fleets\ConditionViewModel.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="ViewModels\Dev\DebugTabViewModel.cs" />
     <Compile Include="ViewModels\CultureViewModel.cs" />
     <Compile Include="ViewModels\GamePageViewModel.cs" />
+    <Compile Include="ViewModels\FleetWindowViewModel.cs" />
     <Compile Include="ViewModels\MainContentViewModel.cs" />
     <Compile Include="Models\INavigator.cs" />
     <Compile Include="ViewModels\Contents\MaterialsViewModel.cs" />
@@ -253,6 +257,9 @@
     </Compile>
     <Compile Include="Views\ExitDialog.xaml.cs">
       <DependentUpon>ExitDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FleetWindow.xaml.cs">
+      <DependentUpon>FleetWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\Browser.xaml.cs">
       <DependentUpon>Browser.xaml</DependentUpon>
@@ -427,6 +434,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExitDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FleetWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
