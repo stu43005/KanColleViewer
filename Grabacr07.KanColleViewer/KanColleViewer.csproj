@@ -25,7 +25,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <ExpressionBlendVersion>12.0.41002.1</ExpressionBlendVersion>
+    <ExpressionBlendVersion>12.0.50716.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -150,7 +150,6 @@
     <Compile Include="ViewModels\Catalogs\ShipViewModel.cs" />
     <Compile Include="ViewModels\Catalogs\SlotItemCatalogViewModel.cs" />
     <Compile Include="ViewModels\Catalogs\SlotItemViewModel.cs" />
-    <Compile Include="ViewModels\Catalogs\SortableColumnViewModel.cs" />
     <Compile Include="ViewModels\Catalogs\ShipCatalogSortWorker.cs" />
     <Compile Include="ViewModels\Contents\Fleets\CombinedFleetViewModel.cs" />
     <Compile Include="ViewModels\Composition\NotifierViewModel.cs" />
@@ -179,6 +178,7 @@
     <Compile Include="ViewModels\CultureViewModel.cs" />
     <Compile Include="ViewModels\GamePageViewModel.cs" />
     <Compile Include="ViewModels\FleetWindowViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainContentViewModel.cs" />
     <Compile Include="Models\INavigator.cs" />
     <Compile Include="ViewModels\Contents\MaterialsViewModel.cs" />
@@ -224,7 +224,6 @@
     <Compile Include="Views\Catalogs\ShipCatalogWindow.xaml.cs">
       <DependentUpon>ShipCatalogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Catalogs\ShipCatalogSortTarget.cs" />
     <Compile Include="Views\Catalogs\SlotItemCatalogWindow.xaml.cs">
       <DependentUpon>SlotItemCatalogWindow.xaml</DependentUpon>
     </Compile>
@@ -251,6 +250,7 @@
     <Compile Include="Views\Controls\ZoomFactorSelector.xaml.cs">
       <DependentUpon>ZoomFactorSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Converters\HasFlagConverter.cs" />
     <Compile Include="Views\Converters\QuestCategoryToColorConverter.cs" />
     <Compile Include="Views\Dev\DebugTab.xaml.cs">
       <DependentUpon>DebugTab.xaml</DependentUpon>
@@ -616,11 +616,11 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <DesignData Include="SampleData\ShipyardViewModelSampleData.xaml">
-      <SubType>Designer</SubType>
-    </DesignData>
+    <DesignData Include="SampleData\ShipCatalogSortWorkerSampleData.xaml" />
+    <DesignData Include="SampleData\ShipyardViewModelSampleData.xaml" />
     <DesignData Include="SampleData\FleetsViewModelSampleData.xaml" />
     <DesignData Include="SampleData\FleetViewModelSampleData.xaml" />
+    <DesignData Include="SampleData\ShipViewModelSampleData.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\app.ico" />
