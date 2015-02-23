@@ -17,7 +17,7 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return this.Item != null; }
 		}
 
-		#region Current 変更通知プロパティ
+		#region Current 螟画峩騾夂衍繝励Ο繝代ユ繧｣
 
 		private int _Current;
 
