@@ -20,6 +20,10 @@
 			 d:DesignHeight="400"
 			 d:DataContext="{d:DesignInstance fleets:FleetsViewModel}">
 
+	<UserControl.Resources>
+		<converters:HasFlagConverter x:Key="HasFlagConverter" />
+	</UserControl.Resources>
+
 	<i:Interaction.Triggers>
 		<livet:InteractionMessageTrigger Messenger="{Binding Messenger}"
 										 MessageKey="Show/FleetWindow">
@@ -405,7 +409,7 @@
 										</ItemsControl.Template>
 										<ItemsControl.ItemTemplate>
 											<DataTemplate>
-												<Border ToolTip="{Binding Item.Info.Name}"
+												<Border ToolTip="{Binding Item.NameWithLevel}"
 														Background="Transparent">
 													<controls:SlotItemIcon Type="{Binding Item.Info.IconType}"
 																		   Margin="3,0" />
@@ -420,7 +424,7 @@
 							</StackPanel>
 
 							<DataTemplate.Triggers>
-								<DataTrigger Binding="{Binding Ship.Situation}"
+								<DataTrigger Binding="{Binding Ship.Situation, Converter={StaticResource HasFlagConverter}, ConverterParameter=Repair}"
 											 Value="Repair">
 									<Setter TargetName="HPText"
 											Property="Opacity"
@@ -432,7 +436,7 @@
 											Property="Visibility"
 											Value="Visible" />
 								</DataTrigger>
-								<DataTrigger Binding="{Binding Ship.Situation}"
+								<DataTrigger Binding="{Binding Ship.Situation, Converter={StaticResource HasFlagConverter}, ConverterParameter=Tow|Evacuation}"
 											 Value="Evacuation,Tow">
 									<Setter TargetName="HPText"
 											Property="Opacity"
