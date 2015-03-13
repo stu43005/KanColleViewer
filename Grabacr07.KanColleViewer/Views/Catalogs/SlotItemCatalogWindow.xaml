@@ -187,7 +187,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.Firepower, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.Firepower, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -200,7 +200,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.Torpedo, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.Torpedo, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -213,7 +213,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.DiveBomb, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.DiveBomb, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -226,7 +226,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.AA, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.AA, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -239,7 +239,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.AS, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.AS, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -252,7 +252,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.SightRange, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.SightRange, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -265,7 +265,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding SlotItem.Accuracy, Mode=OneWay}"
+										<catalogs:SlotItemStatus Value="{Binding Target.Accuracy, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -277,36 +277,36 @@
 									<TextBlock Text="射程" />
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
-									<DataTemplate DataType="{x:Type viewModels:SlotItemViewModel}">
+									<DataTemplate DataType="{x:Type viewModels:SlotItemCounter}">
 										<TextBlock x:Name="Info"
 												   Foreground="{DynamicResource ActiveForegroundBrushKey}"
 												   Margin="0,4" />
 										<DataTemplate.Triggers>
-											<DataTrigger Binding="{Binding SlotItem.AttackRange}"
+											<DataTrigger Binding="{Binding Target.AttackRange}"
 														 Value="0">
 												<Setter TargetName="Info"
 														Property="Text"
 														Value="-" />
 											</DataTrigger>
-											<DataTrigger Binding="{Binding SlotItem.AttackRange}"
+											<DataTrigger Binding="{Binding Target.AttackRange}"
 														 Value="1">
 												<Setter TargetName="Info"
 														Property="Text"
 														Value="短" />
 											</DataTrigger>
-											<DataTrigger Binding="{Binding SlotItem.AttackRange}"
+											<DataTrigger Binding="{Binding Target.AttackRange}"
 														 Value="2">
 												<Setter TargetName="Info"
 														Property="Text"
 														Value="中" />
 											</DataTrigger>
-											<DataTrigger Binding="{Binding SlotItem.AttackRange}"
+											<DataTrigger Binding="{Binding Target.AttackRange}"
 														 Value="3">
 												<Setter TargetName="Info"
 														Property="Text"
 														Value="長" />
 											</DataTrigger>
-											<DataTrigger Binding="{Binding SlotItem.AttackRange}"
+											<DataTrigger Binding="{Binding Target.AttackRange}"
 														 Value="4">
 												<Setter TargetName="Info"
 														Property="Text"
