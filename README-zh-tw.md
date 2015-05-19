@@ -13,7 +13,7 @@
 ## 與原始版本的差異
 * 繁體中文化
 * 限制同時只能開啟一個KanColleViewer
-* 掉落艦娘、建造、装備開発、遠征報告書 (存放在``logs\*.csv``)
+* 掉落艦娘、建造、装備開発、遠征、資材報告書 (存放在``logs\*.csv``)
 * **與原始版本不同的Logger系統**
 * 持有艦娘達到最大時通知提醒
 * 未接相關任務時通知提醒 (只提醒每日或每週任務)
@@ -25,7 +25,9 @@
 * 裝備一覽顯示裝備數值
 * 裝備一覽手動刷新按鈕
 * 支持遠征中止命令
-* **開發補助工具**
+* **裝備開發補助工具**
+* 任務畫面顯示每月任務列表
 
 #### 修正
-* 修正任務全數完成時的錯誤 [#63](https://github.com/Grabacr07/KanColleViewer/issues/63)
+* 修正任務全數完成時的錯誤 [Grabacr07#63](https://github.com/Grabacr07/KanColleViewer/issues/63)
+* 修正客戶端安全問題 [Grabacr07#138](https://github.com/Grabacr07/KanColleViewer/pull/138)
