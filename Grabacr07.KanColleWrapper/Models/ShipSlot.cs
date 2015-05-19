@@ -17,6 +17,11 @@ namespace Grabacr07.KanColleWrapper.Models
 			get { return this.Item != null; }
 		}
 
+		public bool IsEmpty
+		{
+			get { return this.Item.Info == SlotItemInfo.Empty; }
+		}
+
 		#region Current 変更通知プロパティ
 
 		private int _Current;
