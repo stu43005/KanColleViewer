@@ -47,7 +47,7 @@ namespace Grabacr07.KanColleViewer.Views.Catalogs
 
 		#endregion
 
-		#region IsPositive 依存関係プロパティ
+		#region IsNegative 依存関係プロパティ
 
 		public bool IsNegative
 		{
