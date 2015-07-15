@@ -115,6 +115,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>Generic.xaml</DependentUpon>
     </Page>
+    <Page Include="Themes\Generic.SlotItemStatus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -122,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls.Globalization\ResourceService.cs" />
+    <Compile Include="Controls\SlotItemStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Grabacr07.KanColleWrapper.Models;
 
-namespace Grabacr07.KanColleViewer.Views.Catalogs
+namespace Grabacr07.KanColleViewer.Controls
 {
 	/// <summary>
 	/// SlotItem Statusの表示をサポートします。

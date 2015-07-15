@@ -190,7 +190,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.Firepower, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.Firepower, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -203,7 +203,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.Torpedo, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.Torpedo, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -216,7 +216,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.DiveBomb, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.DiveBomb, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -229,7 +229,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.AA, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.AA, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -242,7 +242,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.AS, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.AS, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -255,7 +255,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.SightRange, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.SightRange, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>
@@ -268,7 +268,7 @@
 								</GridViewColumn.Header>
 								<GridViewColumn.CellTemplate>
 									<DataTemplate>
-										<catalogs:SlotItemStatus Value="{Binding Target.Accuracy, Mode=OneWay}"
+										<kcvc:SlotItemStatus Value="{Binding Target.Accuracy, Mode=OneWay}"
 																 Margin="0,4" />
 									</DataTemplate>
 								</GridViewColumn.CellTemplate>

@@ -4,7 +4,6 @@
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/KanColleViewer;component/Themes/Generic.AppIcon.xaml" />
 		<ResourceDictionary Source="/KanColleViewer;component/Themes/Generic.KanColleHost.xaml" />
-		<ResourceDictionary Source="/KanColleViewer;component/Themes/Generic.SlotItemStatus.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
